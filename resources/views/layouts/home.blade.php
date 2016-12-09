@@ -119,10 +119,10 @@
     var ajaxcomment = {"ajax_url":"http:\/\/{{ url('/') }}\/admin-ajax.php","order":"desc","formpostion":"top"};
     /* ]]> */
 </script>
-<script type='text/javascript' src='/Static/home/js/ajax_comment.js' defer='defer'></script>
 <script type='text/javascript' src='//cdn.bootcss.com/jquery/1.8.3/jquery.min.js'></script>
 <script src="https://cdn.staticfile.org/jquery.pjax/1.9.6/jquery.pjax.min.js"></script>
 <script src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js"></script>
+{{--<script type='text/javascript' src='/Static/home/js/ajax_comment.js'></script>--}}
 <script src="/Static/home/js/functions.js"></script>
 <script>
 

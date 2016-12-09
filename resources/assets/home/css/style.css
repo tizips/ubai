@@ -104,27 +104,12 @@ img {border:0;max-width:100%;}
 .search_bg .search_close {position:fixed;right:30px;top:40px;padding:0;margin:0;z-index:10;width:40px;height:40px;border-radius:100%;animation:search .6s;}
 .search_bg .search_close:before,.search_bg .search_close:after {top:8px;background:#f55;width:100%;}
 .search_bg:before {content:'';position:fixed;top:0;bottom:0;left:0;right:0;z-index:3;background:#fff;opacity:0.8;animation:search .4s;}
-@keyframes search {0% {transform:scale(0);}
+@keyframes search {
+    0% {transform:scale(0);}
     55% {transform:scale(1);}
     70% {transform:scale(.95);}
     100% {transform:scale(1);}
 }
-<<<<<<< HEAD
-/* 轮播 */
-/*#slide {width:100%;max-height:300px;overflow:hidden;}*/
-/*#slide img {width:100%;float:left;}*/
-/*.top_home {height:60px;max-height:60px;overflow:hidden;line-height:60px;position:relative;padding:0 4%;}*/
-/*.top_home li {white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}*/
-/*.unslider {position:relative;overflow:hidden !important;}*/
-/*.unslider .unslider-nav {position:absolute;bottom:-10px;left:0;right:0;top:auto;margin:0;}*/
-/*.unslider .unslider-nav ol {list-style:none;text-align:center;}*/
-/*.unslider .unslider-nav ol li {display:inline-block;width:12px;height:12px;margin:0 4px;padding:4px;background:#fff;border-radius:100%;text-indent:-999em;cursor:pointer;opacity:.4;}*/
-/*.unslider .unslider-nav ol li.unslider-active {background:#fff;cursor:default;opacity:1;}*/
-
-/*#main {padding: 20px 0;}*/
-
-=======
->>>>>>> b33fab6151b72d0a1a0282a6f91191b800e717cf
 #slide{margin-bottom:10px;overflow:hidden;}
 #slide img{width:800px;max-width:100%;}
 /* 文章列表 */
@@ -220,7 +205,7 @@ img {border:0;max-width:100%;}
 .post_article hr {border:none;height:1px;background:#eee;margin:50px 30%;}
 .post_article pre {padding:0 20px;position:relative;border:1px solid #eee;color:#2a5;line-height:24px;font-family:sans-serif;}
 .post_article pre:before,.post_article pre:after {display:block;padding:8px 0;font-size:12px;color:#666;}
-.post_article pre:before {content:"<coding type=\"iDevs.cn\">";border-bottom:1px solid #eee;}
+.post_article pre:before {content:"<coding type=\"Ubai.me\">";border-bottom:1px solid #eee;}
 .post_article pre:after {content:"</coding>";border-top:1px solid #eee;/* text-align:right */}
 .post_article code {padding:2px 4px;background:#fafafa;}
 .post_article pre code {display:block;overflow:auto;max-height:240px;padding:10px 20px;background:none;font-size:13px;}

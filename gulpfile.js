@@ -13,11 +13,16 @@ require('laravel-elixir-vue-2');
  |
  */
 
+elixir.config.sourcemaps = false;
+
 elixir(function (min) {
     min.styles([
-        'admin/css/light-bootstrap-dashboard.css'
-    ] , 'public/css/admin.min.css')
-})
+            'admin/css/light-bootstrap-dashboard.css'
+        ] , 'public/css/admin.min.css')
+        .styles([
+            'home/css/style.css'
+        ] , 'all.css');
+});
 
 elixir(function (min) {
     min.scripts([
@@ -41,5 +46,9 @@ elixir(function (min) {
             'admin/js/bootstrap-table.js',
             'admin/js/fullcalendar.min.js',
 
-        ] , 'public/js/admin.min.js');
+        ] , 'public/js/admin.min.js')
+        .scripts([
+            'home/js/ajax_comments.js',
+            'home/js/functions.js'
+        ] , 'all.js');
 });
