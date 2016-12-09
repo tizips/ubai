@@ -13,7 +13,33 @@ require('laravel-elixir-vue-2');
  |
  */
 
-elixir(mix => {
-    mix.sass('app.scss')
-       .webpack('app.js');
+elixir(function (min) {
+    min.styles([
+        'admin/css/light-bootstrap-dashboard.css'
+    ] , 'public/css/admin.min.css')
+})
+
+elixir(function (min) {
+    min.scripts([
+            'admin/js/jquery-ui.min.js',
+            'admin/js/bootstrap-checkbox-radio-switch-tags.js',
+            'admin/js/jquery.sharrre.js',
+            'admin/js/light-bootstrap-dashboard.js',
+            'admin/js/moment.min.js'
+        ] , 'admin/js/public/js/login.min.js')
+        .scripts([
+            'admin/js/jquery-ui.min.js',
+            'admin/js/bootstrap-checkbox-radio-switch-tags.js',
+            'admin/js/jquery.sharrre.js',
+            'admin/js/light-bootstrap-dashboard.js',
+            'admin/js/moment.min.js',
+            'admin/js/inot.vip',
+            'admin/js/bootstrap-selectpicker.js',
+            'admin/js/chartist.min.js',
+            'admin/js/sweetalert2.js',
+            'admin/js/jquery.bootstrap.wizard.min.js',
+            'admin/js/bootstrap-table.js',
+            'admin/js/fullcalendar.min.js',
+
+        ] , 'public/js/admin.min.js');
 });
