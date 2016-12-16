@@ -72,7 +72,7 @@
                 '<a rel="tooltip" title="编辑" class="btn btn-simple btn-info btn-icon table-action edit" href="/admin/editCat/'+row.id+'">',
                 '<i class="iconfont">&#xe668;</i>',
                 '</a>',
-                '<a rel="tooltip" title="删除" class="btn btn-simple btn-danger btn-icon table-action remove" href="javascript:;">',
+                '<a rel="tooltip" title="删除" class="btn btn-simple btn-danger btn-icon table-action remove" href="/admin/toDelCat/'+ row.id +'">',
                 '<i class="iconfont">&#xe6b9;</i>',
                 '</a>',
                 '</div>',
@@ -84,40 +84,40 @@
             var $table = $('#bootstrap-table');
             console.log($table);
             window.operateEvents = {
-                'click .remove': function (e, value, row, index) {
-                    swal({  title: "确定删除 ?",
-                        text: "栏目将会被删除，此操作不可逆 !",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn btn-info btn-fill",
-                        confirmButtonText: "确定 !",
-                        cancelButtonClass: "btn btn-danger btn-fill",
-                        cancelButtonText: "取消",
-                        closeOnConfirm: false,
-                    },function(){
-                        $.ajax({
-                            url: '/admin/delCat',
-                            type: 'get',
-                            data: { id: row.id},
-                            success: function (data) {
-                                if (data['status']===1) {
-                                    notify('success' , data['msg']);
-                                    $table.bootstrapTable('remove', {
-                                        field: 'id',
-                                        values: [row.id]
-                                    });
-                                }else if (data['status']===0) {
-                                    notify('error' , data['msg']);
-                                }else {
-                                    notify('error' , '服务器错误，请稍后请重试 ！');
-                                }
-                            },
-                            error: function () {
-                                notify('error' , '服务器错误，请稍后请重试 ！');
-                            }
-                        });
-                    });
-                },
+//                'click .remove': function (e, value, row, index) {
+//                    swal({  title: "确定删除 ?",
+//                        text: "栏目将会被删除，此操作不可逆 !",
+//                        type: "warning",
+//                        showCancelButton: true,
+//                        confirmButtonClass: "btn btn-info btn-fill",
+//                        confirmButtonText: "确定 !",
+//                        cancelButtonClass: "btn btn-danger btn-fill",
+//                        cancelButtonText: "取消",
+//                        closeOnConfirm: false,
+//                    },function(){
+//                        $.ajax({
+//                            url: '/admin/delCat',
+//                            type: 'get',
+//                            data: { id: row.id},
+//                            success: function (data) {
+//                                if (data['status']===1) {
+//                                    notify('success' , data['msg']);
+//                                    $table.bootstrapTable('remove', {
+//                                        field: 'id',
+//                                        values: [row.id]
+//                                    });
+//                                }else if (data['status']===0) {
+//                                    notify('error' , data['msg']);
+//                                }else {
+//                                    notify('error' , '服务器错误，请稍后请重试 ！');
+//                                }
+//                            },
+//                            error: function () {
+//                                notify('error' , '服务器错误，请稍后请重试 ！');
+//                            }
+//                        });
+//                    });
+//                },
                 'click .status': function (e, value, row, index) {
                     swal({
                         text: "是否修改栏目状态 !",

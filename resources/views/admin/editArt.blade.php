@@ -1,27 +1,30 @@
 @extends('layouts.admin')
 @section('Style')
-    <link rel="stylesheet" href="/Static/Editor/css/wangEditor.min.css">
+    <link rel="stylesheet" href="/components/editor/css/wangEditor.min.css">
     {{--<link rel="stylesheet" href="/Static/Fileinput/css/fileinput.min.css">--}}
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <form id="artForm" class="form-horizontal">
+            <form id="artForm" action="{{ url('admin/toUpdateArt') }}" class="form-horizontal" method="post">
+                {{ csrf_field() }}
                 <div class="col-md-8">
                     <div class="card">
                         <div class="header">编辑文章</div>
                         <div class="content">
                             <div class="form-group">
+                                <input type="hidden" name="id" value="{{ $article->id }}">
                                 <label class="col-md-2 control-label">标题</label>
                                 <div class="col-md-10">
-                                    <input type="text" name="title" class="form-control" value="{{ $article -> article_title }}">
+                                    <input type="text" name="title" class="form-control {{ $errors->has('title') ? 'error' : '' }}" value="{{ old('title') ? old('title') : $article -> title }}">
+                                    @if($errors->has('title')) <strong class="text-danger">{{ $errors->first('title') }}</strong> @endif
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">置顶</label>
                                 <div class="col-md-10">
                                     <label class="checkbox">
-                                        <input type="checkbox" data-toggle="checkbox" name="top" @if($article -> top == 1) checked @endif />
+                                        <input type="checkbox" data-toggle="checkbox" name="top" @if(old('top')) {{ old('top') ? 'checked' : '' }} @else {{ !empty($article -> top) ? 'checked' : '' }} @endif />
                                     </label>
                                 </div>
                             </div>
@@ -31,12 +34,13 @@
                                     <input type="file" class="file" name="banner" id="uploadBanner" data-min-file-count="1" />
                                     <div id="ErrorBlock" class="help-block"></div>
                                 </div>
-                                <input type="hidden" name="bannerPic" value="{{ $article -> thumb }}" />
+                                <input type="hidden" name="thumb" value="{{ old('thumb') ? old('thumb') : $article->thumb }}" />
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">内容</label>
                                 <div class="col-md-10">
-                                    <textarea name="content" id="articleEditor" style="display:none; height: 400px;">{{ $article -> content }}</textarea>
+                                    @if($errors->has('title')) <strong class="text-danger">{{ $errors->first('content') }}</strong> @endif
+                                    <textarea name="content" id="articleEditor" style="display:none; height: 400px;">{{ old('content') ? old('content') : $article->content }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -48,17 +52,18 @@
                             <h4 class="title">发布</h4>
                         </div>
                         <div class="content">
-                            <button type="button" value="1" class="btn btn-default">保存草稿</button>
+                            <button type="submit" name="article_status" value="1" class="btn btn-default">保存草稿</button>
                             <button class="btn btn-default pull-right">预览</button>
                             <div class="clear" style="margin-bottom: 50px;"></div>
-                            <select name="category" class="selectpicker" data-title="文章栏目" data-style="btn-default btn-block" data-menu-style="dropdown-blue">
+                            <select name="cat_id" class="selectpicker" data-title="文章栏目" data-style="btn-default btn-block {{ $errors->has('cat_id') ? 'btn-danger' : '' }}" data-menu-style="dropdown-blue">
                                 @foreach($cat as $value)
-                                    <option value="{{ $value['id'] }}" @if($value['id'] == $article -> cat_id) selected @endif>{{ $value['cat_title'] }}</option>
+                                    <option value="{{ $value['id'] }}" @if($value['id'] == $article->cat_id || $value['id']==old('cat_id')) selected @endif>{{ $value['cat_title'] }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('cat_id')) <strong class="text-danger">{{ $errors->first('cat_id') }}</strong> @endif
                             <div class="content-full-width" style="height: 50px; margin-top: 30px;">
-                                <button type="button" value="2" class="btn btn-danger btn-simple">移至垃圾箱</button>
-                                <button type="button" value="0" class="btn btn-info btn-fill pull-right">发布</button>
+                                <button type="submit" name="article_status" value="2" class="btn btn-danger btn-simple">移至垃圾箱</button>
+                                <button type="submit" name="article_status" value="0" class="btn btn-info btn-fill pull-right">发布</button>
                             </div>
                         </div>
                     </div>
@@ -71,7 +76,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group" style="margin: 0px;">
                                         <label>SEO 关键词</label>
-                                        <input name="seoKeyword" class="tagsinput tag-azure" value="{{ $article -> seo_keyword }}" />
+                                        <input name="seo_keyword" class="tagsinput tag-azure" value="{{ old('seo_keyword') ? old('seo_keyword') : $article->seo_keyword }}" />
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +85,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group" style="margin: 0px;">
                                         <label>seo 标题</label>
-                                        <input type="text" class="form-control" name="seoTitle" placeholder="SEO title" value="{{ $article -> seo_title }}">
+                                        <input type="text" class="form-control" name="seo_title" placeholder="SEO title" value="{{ old('seo_title') ? old('seo_title') : $article->seo_title }}">
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +93,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group" style="margin: 0px;">
                                         <label>seo 描述</label>
-                                        <textarea name="seoDescription" rows="5" class="form-control" placeholder="SEO 描述">{{ $article -> seo_description }}</textarea>
+                                        <textarea name="seo_description" rows="5" class="form-control" placeholder="SEO 描述">{{ old('seo_description') ? old('seo_description') : $article->seo_description }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -101,73 +106,73 @@
     </div>
 @endsection
 @section('JavaScript')
-    <script src="/Static/Editor/js/wangEditor.min.js"></script>
+    <script src="/components/editor/js/wangEditor.min.js"></script>
     {{--<script src="/Static/Fileinput/js/fileinput.min.js"></script>--}}
     <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/fileinput.min.js"></script>
     {{--<script src="/Static/Fileinput/js/locales/zh.js"></script>--}}
     <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/locales/zh.min.js"></script>
-    <script type="text/javascript">
-        $().ready(function () {
-            $('#artForm').bootstrapValidator({
-                fields: {
-                    title: {
-                        validators: {
-                            notEmpty: {
-                                message: '文章标题不能为空'
-                            }
-                        }
-                    },
-                    content: {
-                        validators: {
-                            notEmpty: {
-                                message: '文章内容不能为空'
-                            }
-                        }
-                    }
-                }
-            });
+    {{--<script type="text/javascript">--}}
+        {{--$().ready(function () {--}}
+            {{--$('#artForm').bootstrapValidator({--}}
+                {{--fields: {--}}
+                    {{--title: {--}}
+                        {{--validators: {--}}
+                            {{--notEmpty: {--}}
+                                {{--message: '文章标题不能为空'--}}
+                            {{--}--}}
+                        {{--}--}}
+                    {{--},--}}
+                    {{--content: {--}}
+                        {{--validators: {--}}
+                            {{--notEmpty: {--}}
+                                {{--message: '文章内容不能为空'--}}
+                            {{--}--}}
+                        {{--}--}}
+                    {{--}--}}
+                {{--}--}}
+            {{--});--}}
 
-        });
-        $("#artForm").submit(function(ev){ev.preventDefault();});
-        $("button[type=button]").click(function () {
-            var bootstrapValidator = $("#artForm").data('bootstrapValidator');
-            bootstrapValidator.validate();
-            if(!bootstrapValidator.isValid()){
-                return;
-            }
+        {{--});--}}
+        {{--$("#artForm").submit(function(ev){ev.preventDefault();});--}}
+        {{--$("button[type=button]").click(function () {--}}
+            {{--var bootstrapValidator = $("#artForm").data('bootstrapValidator');--}}
+            {{--bootstrapValidator.validate();--}}
+            {{--if(!bootstrapValidator.isValid()){--}}
+                {{--return;--}}
+            {{--}--}}
 
-            $.ajax({
-                url: '/admin/toUpdateArt',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: {{ $article -> id }},
-                    article_title: $('input[name=title]').val(),
-                    top: $('input[name=top]:checked').val() ? 1 : 0,
-                    article_status: $(this).attr('value') ,
-                    thumb: $('input[name=bannerPic]').val(),
-                    content: $('textarea[name=content]').val(),
-                    cat_id: $('select[name=category]').val(),
-                    seo_keyword: $("input[name=seoKeyword]").val(),
-                    seo_title: $('input[name=seoTitle]').val(),
-                    seo_description: $('textarea[name=seoDescription]').val()
-                },
-                success: function (data) {
-                    if (data['status'] ==1) {
-                        notify('success' , data['msg']);
-                    }else if (data['status'] == 0) {
-                        notify('error' , data['msg']);
-                    }else {
-                        notify('error' , '服务器错误，请稍后重试');
-                    }
-                },
-                error: function () {
-                    notify('error' , '服务器错误，请稍后重试');
-                }
-            });
-        });
+            {{--$.ajax({--}}
+                {{--url: '/admin/toUpdateArt',--}}
+                {{--type: 'POST',--}}
+                {{--data: {--}}
+                    {{--_token: '{{ csrf_token() }}',--}}
+                    {{--id: {{ $article -> id }},--}}
+                    {{--article_title: $('input[name=title]').val(),--}}
+                    {{--top: $('input[name=top]:checked').val() ? 1 : 0,--}}
+                    {{--article_status: $(this).attr('value') ,--}}
+                    {{--thumb: $('input[name=bannerPic]').val(),--}}
+                    {{--content: $('textarea[name=content]').val(),--}}
+                    {{--cat_id: $('select[name=category]').val(),--}}
+                    {{--seo_keyword: $("input[name=seoKeyword]").val(),--}}
+                    {{--seo_title: $('input[name=seoTitle]').val(),--}}
+                    {{--seo_description: $('textarea[name=seoDescription]').val()--}}
+                {{--},--}}
+                {{--success: function (data) {--}}
+                    {{--if (data['status'] ==1) {--}}
+                        {{--notify('success' , data['msg']);--}}
+                    {{--}else if (data['status'] == 0) {--}}
+                        {{--notify('error' , data['msg']);--}}
+                    {{--}else {--}}
+                        {{--notify('error' , '服务器错误，请稍后重试');--}}
+                    {{--}--}}
+                {{--},--}}
+                {{--error: function () {--}}
+                    {{--notify('error' , '服务器错误，请稍后重试');--}}
+                {{--}--}}
+            {{--});--}}
+        {{--});--}}
 
-    </script>
+    {{--</script>--}}
     <script>
 
         $("#uploadBanner").fileinput({
@@ -223,7 +228,7 @@
         editor.config.emotions = {
             'default': {
                 title: '默认',
-                data: '/Static/Editor/emotion/emotions.data'
+                data: '/components/editor/emotion/emotions.data'
             },
             'weibo': {
                 title: '微博表情',

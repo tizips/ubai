@@ -20,7 +20,8 @@ class CreateCategories extends Migration
             $table->increments('id');
             $table->string('cat_name' , 60)->unique()->comment('栏目名称');
             $table->tinyInteger('cat_order')->default(0)->comment('栏目排序');
-            $table->integer('cat_pid')->default(0)->comment('父级栏目 ID');
+            $table->string('cat_pic' , 60)->default('')->comment('栏目图片');
+            $table->integer('cat_pid')->comment('父级栏目 ID');
             $table->string('cat_seo_title', 80)->default('')->index()->comment('栏目 SEO 标题');
             $table->string('cat_seo_keyword' , 150)->default('')->index()->comment('栏目 SEO 关键词');
             $table->string('cat_seo_description' , 255)->default('')->index()->comment('栏目 SEO 描述');

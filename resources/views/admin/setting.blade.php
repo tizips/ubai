@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('Style')
-    <link rel="stylesheet" href="/Static/Fileinput/css/fileinput.min.css">
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/css/fileinput.min.css" rel="stylesheet">
 @endsection
 @section('content')
             <div class="container-fluid">
@@ -68,8 +68,8 @@
             </div>
 @endsection
 @section('JavaScript')
-    <script src="/Static/Fileinput/js/fileinput.min.js"></script>
-    <script src="/Static/Fileinput/locales/zh.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/fileinput.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/locales/zh.min.js"></script>
             <script type="text/javascript">
 
                 $('#firendLinkValidatioin').validate();

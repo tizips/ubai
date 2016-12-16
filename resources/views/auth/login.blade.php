@@ -19,7 +19,7 @@
     <link href="https://cdn.css.net/files/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 
     <!--  Light Bootstrap Dashboard core CSS    -->
-    <link href="{{ asset('/admin/css/light-bootstrap-dashboard.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/admin.min.css') }}" rel="stylesheet"/>
 
     <link rel="stylesheet" href="https://cdn.css.net/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -65,7 +65,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
                         <form id="loginForm" action="{{ url('/login') }}" method="post">
-
+                            {{ csrf_field() }}
                             <!--   if you want to have the card without animation please remove the ".card-hidden" class   -->
                             <div class="card{{-- card-hidden--}}">
                                 <div class="header text-center">{{ config('site.web_name' , '余白') }}</div>
@@ -112,7 +112,7 @@
 
 <!--   Core JS Files and PerfectScrollbar library inside jquery.ui   -->
 <script src="https://cdn.css.net/files/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
-<script src="{{ asset('admin/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/login.min.js') }}" type="text/javascript"></script>
 <script src="https://cdn.css.net/files/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
 
 
@@ -120,7 +120,7 @@
 {{--<script src="/Static/admin/js/jquery.validate.min.js"></script>--}}
 
 <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
-<script src="/Static/admin/js/moment.min.js"></script>
+{{--<script src="/Static/admin/js/moment.min.js"></script>--}}
 
 <!--  Date Time Picker Plugin is included in this js file -->
 {{--<script src="/Static/admin/js/bootstrap-datetimepicker.js"></script>--}}
@@ -129,7 +129,7 @@
 {{--<script src="/Static/admin/js/bootstrap-selectpicker.js"></script>--}}
 
 <!--  Checkbox, Radio, Switch and Tags Input Plugins -->
-<script src="/Static/admin/js/bootstrap-checkbox-radio-switch-tags.js"></script>
+{{--<script src="/Static/admin/js/bootstrap-checkbox-radio-switch-tags.js"></script>--}}
 
 <!--  Charts Plugin -->
 {{--<script src="/Static/admin/js/chartist.min.js"></script>--}}
@@ -156,10 +156,10 @@
 {{--<script src="/Static/admin/js/fullcalendar.min.js"></script>--}}
 
 <!-- Light Bootstrap Dashboard Core javascript and methods -->
-<script src="/Static/admin/js/light-bootstrap-dashboard.js"></script>
+{{--<script src="/Static/admin/js/light-bootstrap-dashboard.js"></script>--}}
 
 <!--   Sharrre Library    -->
-<script src="/Static/admin/js/jquery.sharrre.js"></script>
+{{--<script src="/Static/admin/js/jquery.sharrre.js"></script>--}}
 
 <script type="text/javascript" src="https://cdn.css.net/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->

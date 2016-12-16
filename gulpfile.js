@@ -17,38 +17,41 @@ elixir.config.sourcemaps = false;
 
 elixir(function (min) {
     min.styles([
-            'admin/css/light-bootstrap-dashboard.css'
+            'admin/light-bootstrap-dashboard.css'
         ] , 'public/css/admin.min.css')
         .styles([
-            'home/css/style.css'
-        ] , 'all.css');
+            'home/style.css'
+        ] , 'public/css/all.css');
 });
 
 elixir(function (min) {
     min.scripts([
-            'admin/js/jquery-ui.min.js',
-            'admin/js/bootstrap-checkbox-radio-switch-tags.js',
-            'admin/js/jquery.sharrre.js',
-            'admin/js/light-bootstrap-dashboard.js',
-            'admin/js/moment.min.js'
-        ] , 'admin/js/public/js/login.min.js')
+            'admin/jquery-ui.min.js',
+            'admin/bootstrap-checkbox-radio-switch-tags.js',
+            'admin/jquery.sharrre.js',
+            'admin/light-bootstrap-dashboard.js',
+            'admin/moment.min.js'
+        ] , 'public/js/login.min.js')
         .scripts([
-            'admin/js/jquery-ui.min.js',
-            'admin/js/bootstrap-checkbox-radio-switch-tags.js',
-            'admin/js/jquery.sharrre.js',
-            'admin/js/light-bootstrap-dashboard.js',
-            'admin/js/moment.min.js',
-            'admin/js/inot.vip',
-            'admin/js/bootstrap-selectpicker.js',
-            'admin/js/chartist.min.js',
-            'admin/js/sweetalert2.js',
-            'admin/js/jquery.bootstrap.wizard.min.js',
-            'admin/js/bootstrap-table.js',
-            'admin/js/fullcalendar.min.js',
-
-        ] , 'public/js/admin.min.js')
+            'admin/bootstrap-checkbox-radio-switch-tags.js'
+        ] , 'public/js/form.min.js')
         .scripts([
-            'home/js/ajax_comments.js',
-            'home/js/functions.js'
-        ] , 'all.js');
+            'admin/jquery.sharrre.js'
+        ] , 'public/js/sharrre.min.js')
+        .scripts([
+            'admin/light-bootstrap-dashboard.js'
+        ] , 'public/js/ubar.min.js')
+        .scripts([
+            'admin/bootstrap-selectpicker.js'
+        ] , 'public/js/selectpicker.min.js')
+        .scripts([
+            'admin/sweetalert2.js'
+        ] , 'public/js/sweetalert.min.js')
+        .scripts([
+            'admin/bootstrap-table.js'
+        ] , 'public/js/table.min.js')
+        .scripts([
+            'home/ajax_comment.js',
+            'home/functions.js'
+        ] , 'public/js/all.js');
 });

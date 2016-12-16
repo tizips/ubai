@@ -14,8 +14,8 @@
     <meta name="description" content="">
 
     <link href="https://cdn.css.net/files/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/Static/admin/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
-    {{--<link href="/Static/admin/css/demo.css" rel="stylesheet" />--}}
+    <link href="{{ asset('css/admin.min.css') }}" rel="stylesheet"/>
+{{--    <link href="{{ asset('components/editor/css/wangEditor.') }}" rel="stylesheet" />--}}
     {{--<link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">--}}
     <link rel="stylesheet" href="https://cdn.css.net/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
     <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/css/fileinput.min.css" rel="stylesheet">
@@ -48,7 +48,7 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="black" data-image="/Static/admin/images/full-screen-image-4.jpg">
+    <div class="sidebar" data-color="black" data-image="/images/full-screen-image-4.jpg">
 
         <div class="logo">
             <a href="{{ config('site.web_url') }}" class="logo-text">
@@ -59,11 +59,11 @@
         <div class="sidebar-wrapper">
             <div class="user">
                 <div class="photo">
-                    <img src="{{ $user -> thumb }}" />
+                    <img src="{{ Auth::user() -> thumb }}" />
                 </div>
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                        {{ $user -> name }}
+                        {{ Auth::user() -> name }}
                         <b class="caret"></b>
                     </a>
                     <div class="collapse" id="collapseExample">
@@ -77,7 +77,7 @@
 
             <ul class="nav">
                 <li>
-                    <a href="/admin/system">
+                    <a href="/admin/">
                         <i class="iconfont">&#xe631;</i>
                         <p>仪盘</p>
                     </a>
@@ -129,12 +129,12 @@
                         <p>评论</p>
                     </a>
                 </li>
-                <li>
-                    <a href="/admin/cache">
-                        <i class="iconfont">&#xe647;</i>
-                        <p>缓存</p>
-                    </a>
-                </li>
+                {{--<li>--}}
+                    {{--<a href="/admin/cache">--}}
+                        {{--<i class="iconfont">&#xe647;</i>--}}
+                        {{--<p>缓存</p>--}}
+                    {{--</a>--}}
+                {{--</li>--}}
                 <li>
                     <a data-toggle="collapse" href="#Link">
                         <i class="iconfont">&#xe65c;</i>
@@ -192,9 +192,9 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="{{ config('site.web_url') }}" target="_blank">
-                                <i class="iconfont">&#xe6ad;</i>
-                                <p>{{ config('site.web_name') }}</p>
+                            <a href="{{ url('/') }}" target="_blank">
+                                <i class="fa fa-desktop"></i>
+                                {{--<p>{{ url('/') }}</p>--}}
                             </a>
                         </li>
                         <li class="dropdown dropdown-with-icons">
@@ -233,7 +233,7 @@
         <footer class="footer">
             <div class="container-fluid">
                 <p class="copyright pull-right">
-                    &copy; 2016 <a href="https://www.inot.vip">Tizips</a>
+                    &copy; 2016 <a href="https://www.ubai.me">Tizips</a>
                 </p>
             </div>
         </footer>
@@ -244,33 +244,33 @@
 </body>
 <!--   Core JS Files and PerfectScrollbar library inside jquery.ui   -->
 <script src="https://cdn.css.net/files/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
-<script src="/Static/admin/js/jquery-ui.min.js" type="text/javascript"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}" type="text/javascript"></script>
 <script src="https://cdn.css.net/files/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
 
-<script src="/Static/admin/js/inot.js"></script>
+{{--<script src="{{ asset('js/admin.min.js') }}"></script>--}}
 <!--  Forms Validations Plugin -->
 {{--<script src="/Static/admin/js/jquery.validate.min.js"></script>--}}
 
 <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
-<script src="/Static/admin/js/moment.min.js"></script>
+<script src="{{ asset('js/moment.min.js') }}"></script>
 
 <!--  Date Time Picker Plugin is included in this js file -->
 {{--<script src="/Static/admin/js/bootstrap-datetimepicker.js"></script>--}}
 
 <!--  Select Picker Plugin -->
-<script src="/Static/admin/js/bootstrap-selectpicker.js"></script>
+<script src="{{ asset('js/selectpicker.min.js') }}"></script>
 
 <!--  Checkbox, Radio, Switch and Tags Input Plugins -->
-<script src="/Static/admin/js/bootstrap-checkbox-radio-switch-tags.js"></script>
+<script src="{{ asset('js/form.min.js') }}"></script>
 
 <!--  Charts Plugin -->
-<script src="/Static/admin/js/chartist.min.js"></script>
+<script src="{{ asset('js/chartist.min.js') }}"></script>
 
 <!--  Notifications Plugin    -->
 <script src="https://cdn.css.net/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
 
 <!-- Sweet Alert 2 plugin -->
-<script src="/Static/admin/js/sweetalert2.js"></script>
+<script src="{{ asset('js/sweetalert.min.js') }}"></script>
 
 <!-- Vector Map plugin -->
 {{--<script src="/Static/admin/js/jquery-jvectormap.js"></script>--}}
@@ -279,20 +279,20 @@
 {{--<script src="https://maps.googleapis.com/maps/api/js"></script>--}}
 
 <!-- Wizard Plugin    -->
-<script src="/Static/admin/js/jquery.bootstrap.wizard.min.js"></script>
+<script src="{{ asset('js/jquery.bootstrap.wizard.min.js') }}"></script>
 
 <!--  Datatable Plugin    -->
-<script src="/Static/admin/js/bootstrap-table.js"></script>
+<script src="{{ asset('js/table.min.js') }}"></script>
 
 <!--  Full Calendar Plugin    -->
-<script src="/Static/admin/js/fullcalendar.min.js"></script>
+<script src="{{ asset('js/fullcalendar.min.js') }}"></script>
 
 <!-- Light Bootstrap Dashboard Core javascript and methods -->
-<script src="/Static/admin/js/light-bootstrap-dashboard.js"></script>
+<script src="{{ asset('js/ubar.min.js') }}"></script>
 
 {{--<script src="/Static/admin/js/jquery.bootstrap.wizard.min.js"></script>--}}
 <!--   Sharrre Library    -->
-<script src="/Static/admin/js/jquery.sharrre.js"></script>
+<script src="{{ asset('js/sharrre.min.js') }}"></script>
 <script type="text/javascript" src="https://cdn.css.net/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
 {{--<script src="/Static/admin/js/demo.js"></script>--}}

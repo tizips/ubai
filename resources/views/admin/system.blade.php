@@ -210,7 +210,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            demo.initDashboardPageCharts();
+            ubar.initDashboardPageCharts();
 
 //        $.notify({
 //            icon: 'pe-7s-bell',

@@ -1,12 +1,13 @@
 @extends('layouts.admin')
 @section('Style')
-    <link rel="stylesheet" href="/Static/Editor/css/wangEditor.min.css">
+    <link rel="stylesheet" href="{{ asset('/components/editor/css/wangEditor.min.css') }}">
     <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/css/fileinput.min.css" rel="stylesheet">
 @endsection
 @section('content')
             <div class="container-fluid">
                 <div class="row">
-                    <form id="addCat" class="form-horizontal">
+                    <form action="{{ url('/admin/toAddCat') }}" id="addCat" class="form-horizontal" method="post">
+                        {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="content">
@@ -29,18 +30,20 @@
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">上级栏目</label>
                                                         <div class="col-md-10">
-                                                            <select name="pid" class="selectpicker" data-title="栏目" data-style="btn-default btn-block btn-info btn-fill" data-menu-style="dropdown-blue">
+                                                            <select name="cat_pid" class="selectpicker" data-title="栏目" data-style="btn-default btn-block {{ $errors->has('cat_pid') ? 'btn-danger' : 'btn-info' }} btn-fill" data-menu-style="dropdown-blue">
                                                                 <option value="0" selected>顶级栏目</option>
                                                                 @foreach($catInfo as $val)
-                                                                <option value="{{ $val['id'] }}" @if($val['id'] ==$catPid) selected @endif>@if($val['id'] ==0) 顶级栏目 @else {{ $val['cat_title'] }}@endif</option>
+                                                                <option value="{{ $val['id'] }}" @if($val['id'] ==$catPid || old('cat_pid') == $val['id']) selected @endif>@if($val['id'] ==0) 顶级栏目 @else {{ $val['cat_title'] }}@endif</option>
                                                                 @endforeach
                                                             </select>
+                                                            @if($errors -> has('cat_pid'))<strong class="text-danger">{{ $errors->first('cat_pid') }}</strong>@endif
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">栏目名称</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" name="name" placeholder="栏目名称" class="form-control">
+                                                            <input type="text" name="cat_name" placeholder="栏目名称" value="{{ old('cat_name') }}" class="form-control {{ $errors->has('cat_name') ? 'error' : '' }}">
+                                                            @if($errors -> has('cat_name'))<strong class="text-danger">{{ $errors->first('cat_name') }}</strong>@endif
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -49,25 +52,26 @@
                                                             <input type="file" class="file" name="banner" id="uploadBanner" data-min-file-count="1" />
                                                             <div id="ErrorBlock" class="help-block"></div>
                                                         </div>
-                                                        <input type="hidden" name="bannerPic" />
+                                                        <input type="hidden" name="cat_pic" value="{{ old('cat_pic') }}" />
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">链接地址</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" name="url" placeholder="链接地址 ( 为空 Url 为默认链接 )" class="form-control">
+                                                            <input type="text" name="cat_url" value="{{ old('cat_url') }}" placeholder="链接地址 ( 为空 Url 为默认链接 )" class="form-control {{ $errors->has('cat_url') ? 'error' : '' }}">
+                                                            @if($errors -> has('cat_url'))<strong class="text-danger">{{ $errors->first('cat_url') }}</strong>@endif
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">排序</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" name="order" placeholder="栏目从大到小排序，默认为 0" class="form-control">
+                                                            <input type="text" name="cat_order" value="{{ old('cat_order') }}" placeholder="栏目从大到小排序，默认为 0" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">是否隐藏</label>
                                                         <div class="col-md-10">
                                                             <label class="checkbox">
-                                                                <input name="status" type="checkbox" data-toggle="checkbox" value="1">
+                                                                <input name="cat_status" type="checkbox" {{ old('cat_status') ? 'checked' : '' }} data-toggle="checkbox" value="1">
                                                             </label>
                                                         </div>
                                                     </div>
@@ -81,19 +85,19 @@
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">SEO 标题</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" name="title" placeholder="SEO 栏目标题" class="form-control">
+                                                            <input type="text" name="cat_seo_title" value="{{ old('cat_seo_title') }}" placeholder="SEO 栏目标题" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">SEO 关键词</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" name="keyword" placeholder="SEO 关键词" class="form-control">
+                                                            <input type="text" name="cat_seo_keyword" value="{{ old('cat_seo_keyword') }}" placeholder="SEO 关键词" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">SEO 描述</label>
                                                         <div class="col-md-10">
-                                                            <textarea name="description" class="form-control" placeholder="SEO 描述"></textarea>
+                                                            <textarea name="cat_seo_description" class="form-control" placeholder="SEO 描述">{{ old('cat_seo_description') }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -107,14 +111,14 @@
                                                         <label class="col-md-2 control-label">是否生成单页</label>
                                                         <div class="col-md-10">
                                                             <label class="checkbox">
-                                                                <input name="page" type="checkbox" data-toggle="checkbox" value="1">
+                                                                <input name="cat_page" type="checkbox" {{ old('cat_page') ? 'checked' : '' }} data-toggle="checkbox" value="1">
                                                             </label>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">单页内容</label>
                                                         <div class="col-md-10">
-                                                            <textarea name="content" id="catEditor" style="display:none; height: 400px;"></textarea>
+                                                            <textarea name="cat_page_content" id="catEditor" style="display:none; height: 400px;">{{ old('cat_page_content') }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -131,7 +135,7 @@
 
 @endsection
 @section('JavaScript')
-    <script src="/Static/Editor/js/wangEditor.min.js"></script>
+    <script src="{{ asset('components/editor/js/wangEditor.min.js') }}"></script>
     <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/fileinput.min.js"></script>
     {{--<script src="/Static/Fileinput/js/locales/zh.js"></script>--}}
     <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/locales/zh.min.js"></script>
@@ -191,7 +195,7 @@
         editor.config.emotions = {
             'default': {
                 title: '默认',
-                data: './emotions.data'
+                data: '/components/editor/emotion/emotions.data'
             },
             'weibo': {
                 title: '微博表情',
@@ -279,59 +283,59 @@
         // };
         editor.create();
     </script>
-    <script>
-        $().ready(function () {
-            $('#addCat').bootstrapValidator({
-                fields: {
-                    name: {
-                        validators: {
-                            notEmpty: {
-                                message: '栏目名称不能为空'
-                            }
-                        }
-                    }
-                }
-            });
-            $("#addCat").submit(function(ev){ev.preventDefault();});
-            $("button[name=submit]").click(function () {
-                var bootstrapValidator = $("#addCat").data('bootstrapValidator');
-                bootstrapValidator.validate();
-                if(!bootstrapValidator.isValid()){
-                    return;
-                }
-                var cat_order = 0;
-                if ($("input[name=order]").val() != "") cat_order = $("input[name=order]").val();
-                $.ajax({
-                    url: '/admin/addCatOperate',
-                    type: 'post',
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        cat_name: $("input[name=name]").val(),
-                        cat_order: cat_order,
-                        cat_pid: $("select[name=pid]").val(),
-                        cat_seo_title: $("input[name=title]").val(),
-                        cat_seo_keyword: $("input[name=keyword]").val(),
-                        cat_seo_description: $("textarea[name=description]").val(),
-                        cat_url: $("input[name=url]").val(),
-                        cat_status: $("input[name=status]:checked").val() ? 1 : 0,
-                        cat_page: $("input[name=page]:checked").val() ? 1 : 0,
-                        cat_page_content: $("textarea[name=content]").val()
-                    },
-                    success: function (data) {
-                        if (data['status'] === 1) {
-                            notify('success',data['msg']);
-                            location.reload();
-                        }else if (data['status'] === 0){
-                            notify('error',data['msg']);
-                        }else {
-                            notify('error','服务器错误，请稍后再试');
-                        }
-                    },
-                    error: function () {
-                        notify('error','服务器错误，请稍后再试');
-                    }
-                });
-            });
-        })
-    </script>
+    {{--<script>--}}
+        {{--$().ready(function () {--}}
+            {{--$('#addCat').bootstrapValidator({--}}
+                {{--fields: {--}}
+                    {{--name: {--}}
+                        {{--validators: {--}}
+                            {{--notEmpty: {--}}
+                                {{--message: '栏目名称不能为空'--}}
+                            {{--}--}}
+                        {{--}--}}
+                    {{--}--}}
+                {{--}--}}
+            {{--});--}}
+            {{--$("#addCat").submit(function(ev){ev.preventDefault();});--}}
+            {{--$("button[name=submit]").click(function () {--}}
+                {{--var bootstrapValidator = $("#addCat").data('bootstrapValidator');--}}
+                {{--bootstrapValidator.validate();--}}
+                {{--if(!bootstrapValidator.isValid()){--}}
+                    {{--return;--}}
+                {{--}--}}
+                {{--var cat_order = 0;--}}
+                {{--if ($("input[name=order]").val() != "") cat_order = $("input[name=order]").val();--}}
+                {{--$.ajax({--}}
+                    {{--url: '/admin/addCatOperate',--}}
+                    {{--type: 'post',--}}
+                    {{--data: {--}}
+                        {{--_token: "{{ csrf_token() }}",--}}
+                        {{--cat_name: $("input[name=name]").val(),--}}
+                        {{--cat_order: cat_order,--}}
+                        {{--cat_pid: $("select[name=pid]").val(),--}}
+                        {{--cat_seo_title: $("input[name=title]").val(),--}}
+                        {{--cat_seo_keyword: $("input[name=keyword]").val(),--}}
+                        {{--cat_seo_description: $("textarea[name=description]").val(),--}}
+                        {{--cat_url: $("input[name=url]").val(),--}}
+                        {{--cat_status: $("input[name=status]:checked").val() ? 1 : 0,--}}
+                        {{--cat_page: $("input[name=page]:checked").val() ? 1 : 0,--}}
+                        {{--cat_page_content: $("textarea[name=content]").val()--}}
+                    {{--},--}}
+                    {{--success: function (data) {--}}
+                        {{--if (data['status'] === 1) {--}}
+                            {{--notify('success',data['msg']);--}}
+                            {{--location.reload();--}}
+                        {{--}else if (data['status'] === 0){--}}
+                            {{--notify('error',data['msg']);--}}
+                        {{--}else {--}}
+                            {{--notify('error','服务器错误，请稍后再试');--}}
+                        {{--}--}}
+                    {{--},--}}
+                    {{--error: function () {--}}
+                        {{--notify('error','服务器错误，请稍后再试');--}}
+                    {{--}--}}
+                {{--});--}}
+            {{--});--}}
+        {{--})--}}
+    {{--</script>--}}
 @endsection

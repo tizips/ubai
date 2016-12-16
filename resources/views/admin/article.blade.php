@@ -31,7 +31,7 @@
                                     <tr>
                                         <td></td>
                                         <td>{{ $value -> id }}</td>
-                                        <td>{{ $value -> article_title }}</td>
+                                        <td>{{ $value -> title }}</td>
                                         <td>{{ $value -> cat_name }}</td>
                                         <td>{{ $value -> author }}</td>
                                         <td>{{ $value -> updated_at }}</td>
@@ -70,13 +70,13 @@
         function operateFormatter(value, row, index) {
             return [
                 '<div class="table-icons">',
-                '<a rel="tooltip" title="垃圾箱" class="btn btn-simple btn-warning btn-icon table-action dustbin" href="javascript:void(0)">',
+                '<a rel="tooltip" title="垃圾箱" class="btn btn-simple btn-warning btn-icon table-action dustbin" href="/admin/toDustbin/'+ row.id +'">',
                 '<i class="iconfont">&#xe656;</i>',
                 '</a>',
                 '<a rel="tooltip" title="编辑" class="btn btn-simple btn-info btn-icon table-action edit" href="/admin/editArt/'+ row.id +'">',
                 '<i class="iconfont">&#xe668;</i>',
                 '</a>',
-                '<a rel="tooltip" title="删除" class="btn btn-simple btn-danger btn-icon table-action remove" href="javascript:void(0)">',
+                '<a rel="tooltip" title="删除" class="btn btn-simple btn-danger btn-icon table-action remove" href="/admin/toDelArt/'+ row.id +'">',
                 '<i class="iconfont">&#xe6b9;</i>',
                 '</a>',
                 '</div>',
@@ -94,29 +94,9 @@
                         confirmButtonText: "确定 !",
                         cancelButtonClass: "btn btn-danger btn-fill",
                         cancelButtonText: "取消",
-                        closeOnConfirm: false,
-                    },function(){
-                        $.ajax({
-                            url: '/admin/toDustbin',
-                            type: 'get',
-                            data: { id: row.id},
-                            success: function (data) {
-                                if (data['status']===1) {
-                                    notify('success' , data['msg']);
-                                    $table.bootstrapTable('remove', {
-                                        field: 'id',
-                                        values: [row.id]
-                                    });
-                                }else if (data['status']===0) {
-                                    notify('error' , data['msg']);
-                                }else {
-                                    notify('error' , '服务器错误，请稍后请重试 ！');
-                                }
-                            },
-                            error: function () {
-                                notify('error' , '服务器错误，请稍后请重试 ！');
-                            }
-                        });
+                        closeOnConfirm: false
+                    } , function () {
+                        return true;
                     });
                 },
                 'click .remove': function (e, value, row, index) {
