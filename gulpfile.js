@@ -39,8 +39,11 @@ elixir(function (min) {
             'admin/jquery.sharrre.js'
         ] , 'public/js/sharrre.min.js')
         .scripts([
-            'admin/light-bootstrap-dashboard.js'
+            'admin/ubar.js'
         ] , 'public/js/ubar.min.js')
+        .scripts([
+            'admin/light-bootstrap-dashboard.js'
+        ] , 'public/js/admin.min.js')
         .scripts([
             'admin/bootstrap-selectpicker.js'
         ] , 'public/js/selectpicker.min.js')

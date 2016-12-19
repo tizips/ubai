@@ -212,7 +212,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/loginOut" class="text-danger">
+                                    <a href="{{ url('logout') }}" class="text-danger">
                                         <i class="iconfont">&#xe61e;</i>
                                         退出
                                     </a>
@@ -247,7 +247,7 @@
 <script src="{{ asset('js/jquery-ui.min.js') }}" type="text/javascript"></script>
 <script src="https://cdn.css.net/files/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
 
-{{--<script src="{{ asset('js/admin.min.js') }}"></script>--}}
+<script src="{{ asset('js/admin.min.js') }}"></script>
 <!--  Forms Validations Plugin -->
 {{--<script src="/Static/admin/js/jquery.validate.min.js"></script>--}}
 

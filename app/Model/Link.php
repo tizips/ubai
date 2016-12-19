@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Api\Api;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Laravel\Scout\Searchable;
 use Validator;
@@ -14,7 +15,8 @@ class Link extends Model
 
     use Searchable;
 
-    public $dateFormat = "U";
+//    public $dateFormat = "U";
+    protected $guarded = [];
 
     public function selectLinkPage() {
         return self::join('users' , 'links.operate_user' , '=' , 'users.id')
@@ -43,18 +45,18 @@ class Link extends Model
 
     public function addLink() {
 
-        $input = Request::except('_token');
-        if (empty($input['web_order'])) $input['web_order'] = 50;
-        foreach ($input as $key => $val) {
-            $this -> $key = $val;
-        }
-        $userInfo = Session::get('userInfo');
-        $this -> operate_user = $userInfo -> id;
-        return $this->save();
+        $input = Request::only('web_name','web_url','web_admin','web_email','web_logo','web_order','web_description','web_status');
+        $input['web_order'] = $input['web_order'] ? $input['web_order'] : 50;
+        $input['web_status'] = $input['web_status'] ? 1 : 0;
+        $input['operate_user']  = Auth::id();
+
+        return self::create($input);
     }
 
     public function updateLink() {
         $linkInfo = Request::only(['id','web_admin','web_description','web_email','web_logo','web_name','web_order','web_status','web_url']);
+        $linkInfo['web_order'] = $linkInfo['web_order'] ? $linkInfo['web_order'] : 50;
+        $linkInfo['web_status'] = $linkInfo['web_status'] ? 1 : 0;
         $link = self::select('web_admin','web_description','web_email','web_logo','web_name','operate_user','web_order','web_status','web_url')
             ->find($linkInfo['id']);
 
@@ -62,8 +64,7 @@ class Link extends Model
             $link -> $key = $val;
         }
 
-        $userInfo = Session::get('userInfo');
-        $link -> operate_user = $userInfo -> id;
+        $link -> operate_user = Auth::id();
 
         return $link->save();
 
@@ -73,37 +74,25 @@ class Link extends Model
         return $this -> destroy(Request::get('id'));
     }
 
-    public function validatorAddLink() {
-        $Api = new Api();
+    public function validatorEditLink($LinkID = 0) {
+
         $validator = Validator::make(Request::except('_token') , [
-            'web_name'  =>  'required',
-            'web_url'   =>  'active_url',
+            'web_name'  =>  'bail|required|unique:links,web_name,'.$LinkID,
+            'web_url'   =>  'bail|required|active_url|unique:links,web_url,'.$LinkID,
             'web_admin' =>  'required',
-            'web_email' =>  'required|email'
+            'web_email' =>  'sometimes|required|email|unique:links,web_email,'.$LinkID
         ] , [
             'web_name.required'     =>      '网站名称不能为空',
+            'web_name.unique'       =>      '友链名称已经存在',
+            'web_url.required'      =>      '友链链接不能为空',
             'web_url.active_url'    =>      '请输入正确的友链',
+            'web_url.unique'        =>      '友链链接已经存在',
             'web_admin.required'    =>      '网站管理员不能为空',
             'web_email.required'    =>      '管理员联系邮箱不能为空',
-            'web_email.email'       =>      '请输入正确的 E-mail 地址'
+            'web_email.email'       =>      '请输入正确的 E-mail 地址',
+            'web_email.unique'      =>      '友链管理员邮箱已经存在',
         ]);
-        if ($validator -> fails()) {
-            $Api -> Message = $validator -> errors() -> first();
-            return $Api -> AjaxReturn();
-        }
-        $validator = Validator::make(Request::except('_token') , [
-            'web_name'      =>      'unique:links',
-            'web_url'       =>      'unique:links',
-            'web_email'     =>      'unique:links',
-        ] , [
-            'web_name.unique'       =>      '友链名称已经存在',
-            'web_url.unique'        =>      '友链链接已经存在',
-            'web_email.unique'      =>      '友链管理员邮箱已经存在'
-        ]);
-        if ($validator -> fails()) {
-            $Api -> Message = $validator -> errors() -> first();
-            return $Api -> AjaxReturn();
-        }
+        $validator->validate();
     }
 
     public function validatorLinkExists($linkId) {

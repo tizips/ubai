@@ -6,11 +6,9 @@ use App\Api\Api;
 use Validator;
 use Illuminate\Database\Eloquent\Model;
 use Request;
-use Laravel\Scout\Searchable;
 
 class Category extends Model
 {
-    use Searchable;
 
     protected $guarded = [];
 

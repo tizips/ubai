@@ -17,62 +17,53 @@ class LinkController extends Controller
         $title = '友链管理';
         $linkInfo = $link -> selectLinkPage();
         return view('admin.link' , compact('title'))
-            -> with('link' , $linkInfo)
-            -> with('user' , Session::get('userInfo'));
+            -> with('link' , $linkInfo);
     }
 
     public function addLink () {
         $title = '添加友链';
-        return view('admin.addLink', compact('title'))
-            -> with('user' , Session::get('userInfo'));
+        return view('admin.addLink', compact('title'));
     }
 
     public function editLink ($linkId) {
 
         $link = new Link();
         if (!$link -> validatorLinkExists($linkId)) {
-            return abort('404');
+            abort('404');
         }
         $linkInfo = $link -> findLink($linkId);
+//        dd($linkInfo);
         $title = '编辑友链';
         return view('admin.editLink', compact('title'))
-            -> with('link' , $linkInfo)
-            -> with('user' , Session::get('userInfo'));
+            -> with('link' , $linkInfo);
     }
 
     public function toEditLink() {
-        $Api = new Api();
+//        dd(Request::all());
+//        $Api = new Api();
         $link = new Link();
         if (!$link->validatorLinkExists(Request::get('id'))) {
-            $Api -> Message = '友链不存在';
-            return $Api -> AjaxReturn();
+            abort('404');
         }
+        $link->validatorEditLink(Request::get('id'));
         if(!$link -> updateLink()){
-            $Api -> Message = '修改失败';
-        }else{
-            $this -> store();
-            $Api -> Status = 1;
-            $Api -> Message = '修改成功';
+            return 'error';
         }
-        return $Api -> AjaxReturn();
+        return redirect('admin/link');
     }
 
     public function toAddLink() {
 //        dd(Request::all());
-        $Api = new Api();
+//        $Api = new Api();
         $link = new Link();
-        $validatorResult = $link -> validatorAddLink();
-        if (!empty($validatorResult)) {
-            return $validatorResult;
-        }
+        $link -> validatorEditLink();
+//        if (!$link -> validatorEditLink()) {
+//            return $validatorResult;
+//        }
         if (!$link -> addLink()) {
-            $Api -> Message = '添加失败';
-        }else{
-            $this -> store();
-            $Api -> Status = 1;
-            $Api -> Message = '添加成功';
+            return 'error';
         }
-        return $Api -> AjaxReturn();
+        return redirect('admin/link');
     }
 
     public function delLink() {

@@ -148,7 +148,7 @@ class ArticleController extends Controller
     
     public function toDelDustbin($ArtID) {
 
-        $Api = new Api();
+//        $Api = new Api();
 //        $artId = Request::get('id');
         $article = new Article();
         if (!$article -> validatorDustbinExists($ArtID)) {
