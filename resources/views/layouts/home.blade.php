@@ -10,7 +10,7 @@
     <script type='text/javascript' src='https://cdn.staticfile.org/jquery/1.12.3/jquery.min.js' defer='defer'></script>
     <script type='text/javascript' src='https://cdn.staticfile.org/jquery-migrate/1.4.0/jquery-migrate.min.js' defer='defer'></script>
     <link type="image/vnd.microsoft.icon" href="/favicon.ico" rel="shortcut icon">
-    <link href="/Static/home/css/style.css" type="text/css" rel="stylesheet" />
+    <link href="{{ elixir('css/all.min.css') }}" type="text/css" rel="stylesheet" />
     <link href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
@@ -38,7 +38,7 @@
 <section id="index">
     <header id="header">
         <div class="logo">
-            <a href="{{ url('/') }}">{{ config('site.web_name') }}</a>
+            <a href="{{ url('/') }}">{{ config('site.web_name','余白') }}</a>
         </div>
         <div class="search_click"></div>
         <nav id="topMenu" class="menu_click">
@@ -46,11 +46,11 @@
                 <ul id="menu-menu" class="menu">
                     <li><a href="{{ url('/') }}">首页</a></li>
                     @foreach($menu as $val)
-                        <li><a @if(!isset($val['child'])) href="/Cat/{{ $val['id'] }}" @endif>{{ $val['cat_name'] }}</a>
+                        <li><a @if(!isset($val['child'])) href="{{ $val['cat_url'] ? $val['cat_url'] : '/Cat/'.$val['id'] }}" @endif>{{ $val['cat_name'] }}</a>
                             @if(isset($val['child']))
                                 <ul class="sub-menu">
                                     @foreach($val['child'] as $child)
-                                        <li><a href="/Cat/{{ $child['id'] }}">{{ $child['cat_name'] }}</a></li>
+                                        <li><a href="{{ $child['cat_url'] ? $child['cat_url'] : '/Cat/'.$child['id'] }}">{{ $child['cat_name'] }}</a></li>
                                     @endforeach
                                 </ul>
                             @endif
@@ -67,13 +67,13 @@
             <nav>
                 <div class="menu-menu-1-container">
                     <ul id="menu-menu-2" class="menu">
-                        <li class="current-menu-item"><a href="{{ config('site.web_url') }}">首页</a></li>
+                        <li class="current-menu-item"><a href="{{ url('/') }}">首页</a></li>
                         @foreach($menu as $val)
-                        <li><a @if(!isset($val['child'])) href="/Cat/{{ $val['id'] }}" @endif>{{ $val['cat_name'] }}</a>
+                        <li><a @if(!isset($val['child'])) href="{{ $val['cat_url'] ? $val['cat_url'] : '/Cat/'.$val['id'] }}" @endif>{{ $val['cat_name'] }}</a>
                             @if(isset($val['child']))
                             <ul class="sub-menu">
                                 @foreach($val['child'] as $child)
-                                <li><a href="/Cat/{{ $child['id'] }}">{{ $child['cat_name'] }}</a></li>
+                                <li><a href="{{ $val['cat_url'] ? $val['cat_url'] : '/Cat/'.$val['id'] }}">{{ $child['cat_name'] }}</a></li>
                                 @endforeach
                             </ul>
                             @endif
@@ -100,7 +100,7 @@
             </ul>
         </section>
         Theme by <a target="_blank" href="https://www.inot.vip">tizips</a>
-        &copy; 2016 <a href="{{ url('/') }}">{{ config('site.web_name') }}</a>
+        &copy; 2016 <a href="{{ url('/') }}">{{ config('site.web_name','余白') }}</a>
         <a class="back2top"></a>
     </footer>
 </section>
@@ -123,7 +123,7 @@
 <script src="https://cdn.staticfile.org/jquery.pjax/1.9.6/jquery.pjax.min.js"></script>
 <script src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js"></script>
 {{--<script type='text/javascript' src='/Static/home/js/ajax_comment.js'></script>--}}
-<script src="/Static/home/js/functions.js"></script>
+<script src="{{ asset('js/all.js') }}"></script>
 <script>
 
 </script>

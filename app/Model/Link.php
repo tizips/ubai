@@ -70,8 +70,8 @@ class Link extends Model
 
     }
 
-    public function delLink() {
-        return $this -> destroy(Request::get('id'));
+    public function delLink($LinkID) {
+        return $this -> destroy($LinkID);
     }
 
     public function validatorEditLink($LinkID = 0) {

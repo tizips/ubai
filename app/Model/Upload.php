@@ -10,7 +10,7 @@ use Validator;
 class Upload extends Model
 {
 
-    public $dateFormat = "U";
+//    public $dateFormat = "U";
 
     protected $dates = ['created_at'];
 
@@ -90,7 +90,7 @@ class Upload extends Model
 
         $validator = Validator::make(Request::only($this -> field) , [
 
-            $this -> field      =>      'max:'.config('site.upload_limit').'|file'
+            $this -> field      =>      'max:'.config('site.upload_limit' , 1024).'|file'
         ] , [
 
             $this -> field.'.max'   =>  '最大上传支持 '.config('site.upload_limit').' Kb',

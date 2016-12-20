@@ -73,7 +73,7 @@
                         '<a rel="tooltip" title="编辑" class="btn btn-simple btn-info btn-icon table-action view" href="/admin/editLink/'+row.id+'">',
                         '<i class="iconfont">&#xe6b0;</i>',
                         '</a>',
-                        '<a rel="tooltip" title="删除" class="btn btn-simple btn-danger btn-icon table-action remove" href="javascript:void(0)">',
+                        '<a rel="tooltip" title="删除" class="btn btn-simple btn-danger btn-icon table-action remove" href="/admin/delLink/'+row.id+'">',
                         '<i class="iconfont">&#xe6b9;</i>',
                         '</a>',
                         '</div>'
@@ -81,7 +81,7 @@
                 }
 
                 $().ready(function(){
-                    window.operateEvents = {
+//                    window.operateEvents = {
 //                        'click .remove': function (e, value, row, index) {
 //                            swal({  title: "确定删除 ?",
 //                                text: "友情链接将会被删除，此操作不可逆 !",
@@ -116,7 +116,7 @@
 //                                });
 //                            });
 //                        }
-                    };
+//                    };
 
                     $table.bootstrapTable({
                         toolbar: ".toolbar",

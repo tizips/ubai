@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Home\IndexController@index');
+Route::get('link' ,'Home\LinkController@index');
+Route::get('Art/{ArtID}' ,'Home\ArticleController@index');
+Route::get('Cat/{CatID}', 'Home\CategoryController@index');
+Route::get('msg', 'Home\MsgController@index');
 
 Auth::routes();
 
@@ -54,7 +56,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth'] , function () {
     Route::post('toAddLink' , 'Admin\LinkController@toAddLink');
     Route::get('editLink/{linkId}' , 'Admin\LinkController@editLink');
     Route::post('toEditLink' , 'Admin\LinkController@toEditLink');
-    Route::get('delLink' , 'Admin\LinkController@delLink');
+    Route::get('delLink/{LinkID}' , 'Admin\LinkController@delLink');
     Route::get('setting' , 'Admin\SetController@index');
 });
 

@@ -197,7 +197,7 @@
             }
         }).on('fileuploaded' , function (e, data) {
             if (data.response['status'] ==0) {
-                $("input[name=bannerPic]").val(data.response['url']);
+                $("input[name=thumb]").val(data.response['url']);
             }
         });
         /**

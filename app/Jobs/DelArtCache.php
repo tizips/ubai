@@ -2,14 +2,13 @@
 
 namespace App\Jobs;
 
-use App\Model\Article;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cache;
 
-class UpdateArticleCache implements ShouldQueue
+class DelArtCache implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -31,8 +30,6 @@ class UpdateArticleCache implements ShouldQueue
      */
     public function handle()
     {
-        $article = new Article();
-        $art = $article -> findArtInfo($this->ArtID);
-        Cache::tags(['article' , $this->ArtID]) -> forever('article',$art);
+        Cache::tags(['article' , $this->ArtID])->forget('article');
     }
 }

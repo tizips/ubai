@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Api\Api;
 use App\Http\Controllers\Controller;
+use App\Jobs\DelArtCache;
+use App\Jobs\UpdateArticleCache;
 use App\Jobs\UpdateIndexCache;
 use App\Model\Article;
 use App\Model\Category;
@@ -51,13 +53,11 @@ class ArticleController extends Controller
         $artInfo = $article -> findArt($artId);
         return view('admin.editArt' , compact('title')) 
             -> with('article' , $artInfo) 
-            -> with('cat' , $catInfo)
-            -> with('user' , Session::get('userInfo'));
+            -> with('cat' , $catInfo);
     }
 
     public function toUpdateArt() {
 
-//        $Api = new Api();
         $article = new Article();
 
         if (!$article -> validatorArtExists(Request::get('id'))) {
@@ -74,45 +74,33 @@ class ArticleController extends Controller
             if (!$artInfo -> delete()) {
                 return 'error';
             }else{
-//                $this -> store();
                 return redirect('admin/dustbin');
-//                $Api -> Status = 1;
-//                $Api -> Message = '移至垃圾箱成功';
             }
         }else {
-//            $this -> store();
+            $this->dispatch(new UpdateArticleCache(Request::get('id')));
+            $this->dispatch(new UpdateIndexCache());
             return redirect('admin/art');
-//            $Api -> Status = 1;
-//            $Api -> Message = '保存草稿成功';
         }
 
-//        return $Api -> AjaxReturn();
     }
 
     public function toDustbin($ArtID) {
 
-//        $Api = new Api();
-//        $artId = Request::get('id');
         $article = new Article();
         if (!$article -> validatorArtExists($ArtID)) {
             abort('404');
         }
         if (!$article -> toDustbin($ArtID)) {
-//            $Api -> Message = '移至垃圾箱失败';
             return 'error';
         }
+        $this->dispatch(new DelArtCache($ArtID));
+        $this->dispatch(new UpdateIndexCache());
         return redirect('admin/dustbin');
-//        $this -> store();
-//        $Api -> Status = 1;
-//        $Api -> Message = '移至垃圾箱成功';
-//        return $Api -> AjaxReturn();
 
     }
 
     public function toDelete($ArtID) {
 
-//        $Api = new Api();
-//        $artId = Request::get('id');
         $article = new Article();
         if (!$article -> validatorArtExists($ArtID)) {
             abort('404');
@@ -120,64 +108,44 @@ class ArticleController extends Controller
         if (!$article -> delArt($ArtID)) {
             return 'error';
         }
-//        $this -> store();
+        $this->dispatch(new DelArtCache($ArtID));
+        $this->dispatch(new UpdateIndexCache());
         return redirect('admin/art');
-//        $Api -> Status = 1;
-//        $Api -> Message = '删除成功';
-//        return $Api -> AjaxReturn();
     }
 
     public function toRestoreArt($ArtID) {
 
-//        $Api = new Api();
-//        $artId = Request::get('id');
         $article = new Article();
-//        dd($ArtID);
+
         if (!$article -> validatorDustbinExists($ArtID)) {
             abort('404');
         }
         if (!$article -> restoreArt($ArtID)) {
             return 'error';
         }
-//        $this -> store();
+//        $this->dispatch(new UpdateArticleCache($ArtID));
+//        $this->dispatch(new UpdateIndexCache());
         return redirect('admin/art');
-//        $Api -> Status = 1;
-//        $Api -> Message = '还原成功';
-//        return $Api -> AjaxReturn();
     }
     
     public function toDelDustbin($ArtID) {
 
-//        $Api = new Api();
-//        $artId = Request::get('id');
         $article = new Article();
         if (!$article -> validatorDustbinExists($ArtID)) {
             abort('404');
-//            $Api -> Message = '垃圾箱中不存在此文章';
-//            return $Api -> AjaxReturn();
         }
         if (!$article -> delDustbin($ArtID)) {
 
             return 'error';
-//            $Api -> Message = '删除失败';
-//            return $Api -> AjaxReturn();
         }
         return redirect('admin/dustbin');
-//        $Api -> Status = 1;
-//        $Api -> Message = '删除成功';
-//        return $Api -> AjaxReturn();
     }
     
     public function toAddArt() {
-//        dd(Request::only('article_title','top','thumb','content','category','seo_keyword','seo_title','seo_description','article_status'));
-//        $Api = new Api();
+
         $article = new Article();
 
         $article -> validatorArticle();
-
-//        if (!empty($validatorResult)) {
-//            return $validatorResult;
-//        }
 
         $art = $article -> saveArt();
 
@@ -191,11 +159,10 @@ class ArticleController extends Controller
                 return redirect('admin/dustbin');
             }
         }else {
+            $this->dispatch(new UpdateArticleCache($art->id));
+            $this->dispatch(new UpdateIndexCache());
             return redirect('admin/art');
         }
-
-//        return $Api -> AjaxReturn();
-
     }
 
     public function uploadBanner() {
@@ -223,7 +190,4 @@ class ArticleController extends Controller
         return $picInfo -> url;
     }
 
-    public function store() {
-        dispatch(new UpdateIndexCache());
-    }
 }
