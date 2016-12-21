@@ -31,6 +31,7 @@ class UpdateLinkCache implements ShouldQueue
     public function handle()
     {
         $link = new Link();
-        Cache::forever('link' , $link -> selectLink());
+        Cache::forget('link');
+        Cache::forever('link' , $link->selectLink());
     }
 }

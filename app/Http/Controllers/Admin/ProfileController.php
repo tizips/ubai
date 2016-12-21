@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\User;
 use App\Tool\ImageDealt;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Request;
 use Session;
 
@@ -15,8 +16,7 @@ class ProfileController extends Controller
     public function index () {
 
         $title = '个人资料';
-        return view('admin.profile' , compact('title'))
-            -> with('user' , Session::get('userInfo'));
+        return view('admin.profile' , compact('title'));
     }
 
     public function editPwd () {
@@ -28,21 +28,20 @@ class ProfileController extends Controller
 
     public function toUpdateProfile() {
 
-        $Api = new Api();
+//        dd(Request::all());
+//        $Api = new Api();
         $user = new User();
-        $validatorResult = $user -> updateValidator();
-        if (!empty($validatorResult)) {
-            return $validatorResult;
-        }
+        $user -> ValidatorUser(Request::get('id'));
+//        if (!empty($validatorResult)) {
+//            return $validatorResult;
+//        }
         if (!$user -> updateUser()) {
-            $Api -> Message = '修改失败';
-        }else{
-            $userInfo = $user -> findUserById(Request::get('id'));
-            Session::put('userInfo' , $userInfo);
-            $Api -> Status = 1;
-            $Api -> Message = '修改成功';
+            return 'error';
         }
-        return $Api -> AjaxReturn();
+        $userInfo = $user->findUser(Request::get('id'));
+        Auth::login($userInfo);
+        Session::flash('operateInfo' , '资料修改成功');
+        return redirect('admin/profile');
 
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Jobs\UpdateLinkCache;
 use App\Model\Link;
+use App\Tool\ImageDealt;
 use Session;
 use Request;
 
@@ -74,6 +75,22 @@ class LinkController extends Controller
         }
         $this->store();
         return redirect('admin/link');
+    }
+
+    public function uploadThumb () {
+
+        $thumb = new ImageDealt();
+
+        $thumb -> field = 'uploadThumb';
+
+        $thumb -> path = 'thumb';
+
+        $thumb -> isThumb = true;
+
+        $thumb -> width = 200;
+        $thumb -> height = 200;
+
+        return $thumb -> upload();
     }
 
     public function store() {

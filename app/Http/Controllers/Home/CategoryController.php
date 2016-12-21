@@ -14,6 +14,7 @@ class CategoryController extends Controller
 
         return view('home.category')
             ->with('menu' , Cache::get('topMenu'))
-            ->with('art' , Cache::tags(['index' , $num])->get('ArtList'));
+            ->with('art' , Cache::tags(['index' , $num])->get('ArtList'))
+            ->with('link' , Cache::get('link'));
     }
 }

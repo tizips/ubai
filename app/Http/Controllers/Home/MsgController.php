@@ -11,6 +11,7 @@ class MsgController extends Controller
     public function index() {
         
         return view('home.msg')
-            ->with('menu' , Cache::get('topMenu'));
+            ->with('menu' , Cache::get('topMenu'))
+            ->with('link' , Cache::get('link'));
     }
 }

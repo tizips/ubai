@@ -20,7 +20,7 @@
                     @foreach($link as $val)
                     <li>
                         <a href='{{ $val -> web_url }}' target='_blank' title='{{ $val -> web_name }}'>
-                            <img alt="{{ $val -> web_admin }}" src='/upload/thumb/83620161123053910.jpg' class="avatar avatar-120" width="120" height="120" />
+                            <img alt="{{ $val -> web_admin }}" src='{{ $val->web_logo }}' class="avatar avatar-120" width="120" height="120" />
                             <span>{{ $val -> web_name }}<br></span>
                         </a>
                     </li>

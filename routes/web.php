@@ -57,7 +57,6 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth'] , function () {
     Route::get('editLink/{linkId}' , 'Admin\LinkController@editLink');
     Route::post('toEditLink' , 'Admin\LinkController@toEditLink');
     Route::get('delLink/{LinkID}' , 'Admin\LinkController@delLink');
+    Route::post('link/uploadThumb' , 'Admin\LinkController@uploadThumb');
     Route::get('setting' , 'Admin\SetController@index');
 });
-
-Route::get('/home', 'HomeController@index');

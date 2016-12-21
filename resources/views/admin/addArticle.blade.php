@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('Style')
-    <link rel="stylesheet" href="{{ asset('/components/editor/css/wangEditor.min.css') }}"
-          xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('/components/editor/css/wangEditor.min.css') }}">
     <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/css/fileinput.min.css" rel="stylesheet">
 
 @endsection

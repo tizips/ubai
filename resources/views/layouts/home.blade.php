@@ -91,15 +91,17 @@
     <footer id="footer">
         <section class="links_adlink">
             <ul class="container">
-                <li><a target="_blank" href="http://biji.io/">设计笔记</a></li>
-                <li><a target="_blank" href="http://ji8.me/">基吧</a></li>
-                <li><a href="/link">链接</a></li>
+                @foreach($link as $val)
+                    @if($val->show_bottom == 1)
+                <li><a target="_blank" href="{{ $val->web_url }}">{{ $val->web_name }}</a></li>
+                    @endif
+                @endforeach
                 <li><a target="_blank" href="http://www.siryin.com/sitemap.xml">地图</a></li>
                 <br />
                 <li>我想背上行囊，去远方的他乡。去寻找你的过往，去实现我的梦想。</li>
             </ul>
         </section>
-        Theme by <a target="_blank" href="https://www.inot.vip">tizips</a>
+        Theme by <a target="_blank" href="https://www.ubai.me">tizips</a>
         &copy; 2016 <a href="{{ url('/') }}">{{ config('site.web_name','余白') }}</a>
         <a class="back2top"></a>
     </footer>

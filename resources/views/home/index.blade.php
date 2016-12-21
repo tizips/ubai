@@ -24,7 +24,7 @@
         @endforeach
 
         <nav class="navigator">
-            {!! $link or '' !!}
+            {!! $page or '' !!}
             {{--<a href="#" ><i class="iconfont">&#xe79e;</i></a>--}}
             {{--<a href="#" ><i class="iconfont">&#xe6ba;</i></a>--}}
         </nav>

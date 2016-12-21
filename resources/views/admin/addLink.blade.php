@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('Style')
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/css/fileinput.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -42,8 +43,10 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">logo</label>
                                         <div class="col-md-9">
-                                            <input type="text" placeholder="站长联系邮箱" name="web_logo" class="form-control" value="{{ old('web_logo') }}" />
+                                            <input type="file" class="file" id="uploadThumb" name="uploadThumb" multiple>
+                                            <div id="ErrorBlock" class="help-block"></div>
                                         </div>
+                                        <input type="hidden" name="web_logo" value="{{ old('web_logo') }}">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">排列位置</label>
@@ -55,6 +58,14 @@
                                         <label class="col-md-2 control-label">网站简述</label>
                                         <div class="col-md-9">
                                             <textarea class="form-control" name="web_description" placeholder="网站简述 ...">{{ old('web_description') }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">底部显示</label>
+                                        <div class="col-md-9">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="show_bottom" data-toggle="checkbox" value="1" {{ old('show_bottom') ? 'checked' : '' }} >
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -81,7 +92,33 @@
 @endsection
 
 @section('JavaScript')
-
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/fileinput.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/locales/zh.min.js"></script>
+    <script>
+        $("#uploadThumb").fileinput({
+            language: 'zh',
+            uploadUrl: '/admin/link/uploadThumb', // you must set a valid URL here else you will get an error
+            allowedFileExtensions : ['jpg', 'png','gif'],
+            elErrorContainer: '#ErrorBlock',
+            overwriteInitial: false,
+            showPreview: false,
+            maxFileSize: 400,
+            maxFilesNum: 1,
+            uploadExtraData: {
+                _token: '{{ csrf_token() }}'
+            },
+            slugCallback: function(filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        }).on('fileuploaded' , function (e, data) {
+            if (data.response['status'] ==0) {
+                $("input[name=web_logo]").val(data.response['url']);
+            }
+        });
+        /*
+         图片上传完成之后的回调函数
+         */
+    </script>
     {{--<script type="text/javascript">--}}
         {{--$().ready(function () {--}}
             {{--$('#linkForm').bootstrapValidator({--}}

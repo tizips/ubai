@@ -15,6 +15,7 @@ class ArticleController extends Controller
 //        dd(Cache::tags(['article' , $ArtId])->get('article'));
         return view('home.article')
             ->with('menu' , Cache::get('topMenu'))
-            ->with('art' , Cache::tags(['article' , $ArtId])->get('article'));
+            ->with('art' , Cache::tags(['article' , $ArtId])->get('article'))
+            ->with('link' , Cache::get('link'));
     }
 }
