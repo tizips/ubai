@@ -130,11 +130,11 @@ class Category extends Model
 
         $validator = Validator::make(Request::except('_token') , [
             'cat_name'      =>  'bail|required|unique:categories,cat_name,'.$CatID,
-            'cat_url'       =>  'sometimes|active_url'
+            'cat_url'       =>  'sometimes|url'
         ] , [
             'cat_name.required'     =>  '栏目名称不能为空',
             'cat_name.unique'       =>  '栏目已存在',
-            'cat_url.active_url'    =>  '链接格式不正确',
+            'cat_url.url'    =>  '链接格式不正确',
             'cat_pid.exists'        =>  '父级栏目不存在'
         ]);
         $validator -> sometimes('cat_pid' , 'exists:categories,id' , function ($input) {

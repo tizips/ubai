@@ -66,6 +66,13 @@ class Article extends Model
         
         return self::count();
     }
+
+    public function selectUserArticleID ($UserID) {
+        return self::select('id')
+            ->where('author' , $UserID)
+            ->get()
+            ->toArray();
+    }
     
     public function selectArticle($offset) {
 

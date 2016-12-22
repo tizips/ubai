@@ -33,7 +33,7 @@
             </ul>
             <div class="about">
                 <a><img alt="{{ $art->author }}" src="{{ $art->user_thumb  }}" class="avatar avatar-80 photo" height="80" width="80"></a>
-                <span>{{ $art->user_description }}</span>
+                <span>{{ $art->author_description }}</span>
             </div>
         </section>
 

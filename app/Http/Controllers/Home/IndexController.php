@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
-use App\Model\Link;
+use App\Model\Article;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Request;
 
@@ -11,9 +12,9 @@ use Request;
 class IndexController extends Controller
 {
     public function index() {
-//        $link = new Link();
-//		dd($link -> selectLink());
-//        dd(Cache::get('link'));
+//        $art = new Article();
+//        dd($art->selectUserArticleID(Auth::id()));
+//        dd(Cache::get('topMenu'));
 		$num = Request::input('page' , 1);
 		$article = Cache::tags(['index' , $num])->get('ArtList');
 		

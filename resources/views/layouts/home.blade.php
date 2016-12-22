@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>{{ config('site.web_name') }}</title>
+    <title>{{ config('site.web_name','余白') }}</title>
     <meta name="description"  content="" />
     <meta name="keywords"  content="" />
     <script type='text/javascript' src='https://cdn.staticfile.org/jquery/1.12.3/jquery.min.js' defer='defer'></script>
@@ -73,7 +73,7 @@
                             @if(isset($val['child']))
                             <ul class="sub-menu">
                                 @foreach($val['child'] as $child)
-                                <li><a href="{{ $val['cat_url'] ? $val['cat_url'] : '/Cat/'.$val['id'] }}">{{ $child['cat_name'] }}</a></li>
+                                <li><a href="{{ $child['cat_url'] ? $child['cat_url'] : '/Cat/'.$child['id'] }}">{{ $child['cat_name'] }}</a></li>
                                 @endforeach
                             </ul>
                             @endif

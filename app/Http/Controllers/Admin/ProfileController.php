@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Api\Api;
 use App\Http\Controllers\Controller;
+use App\Jobs\UpdateArticleCache;
+use App\Model\Article;
 use App\Model\User;
 use App\Tool\ImageDealt;
 use Illuminate\Support\Facades\App;
@@ -41,6 +43,11 @@ class ProfileController extends Controller
         $userInfo = $user->findUser(Request::get('id'));
         Auth::login($userInfo);
         Session::flash('operateInfo' , '资料修改成功');
+        $article = new Article();
+        $ArtID = $article -> selectUserArticleID(Auth::id());
+        foreach ($ArtID as $value) {
+            $this->dispatch(new UpdateArticleCache($value['id']));
+        }
         return redirect('admin/profile');
 
     }
