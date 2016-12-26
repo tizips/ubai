@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Api\Api;
 use App\Http\Controllers\Controller;
 use App\Jobs\DelArtCache;
+use App\Jobs\DelCatCache;
 use App\Jobs\UpdateArticleCache;
 use App\Jobs\UpdateCategories;
 use App\Jobs\UpdateCategoryCache;
@@ -67,7 +68,7 @@ class ArticleController extends Controller
             abort('404');
         }
         $article->validatorArticle(Request::get('id'));
-
+        $oldCatId = $article->findArtCat(Request::get('id'));
         $art = $article -> updateArt();
         if (empty($art)) {
             return 'error';
@@ -80,7 +81,9 @@ class ArticleController extends Controller
                 return redirect('admin/dustbin');
             }
         }else {
+//            $this->dispatch(new DelCatCache($oldCatId));
             $this->dispatch(new UpdateCategoryCache(Request::get('cat_id')));
+            $this->dispatch(new UpdateCategoryCache($oldCatId));
             $this->dispatch(new UpdateArticleCache(Request::get('id')));
             $this->dispatch(new UpdateIndexCache());
             return redirect('admin/art');

@@ -78,6 +78,7 @@ class Category extends Model
                 unset($CatArr[$key]);
             }
         }
+//        dd($CatArr);
         return $CatArr;
     }
 
@@ -223,9 +224,9 @@ class Category extends Model
             $catInfo[$value['id']] = $value;
         }
         static $arr = array();
-        foreach ($catInfo as $key => $value) {
+        foreach ($catInfo as $value) {
             if ($value['id']==$CatID) {
-                $arr[] = $value['cat_pid'];
+                $arr[] = $value['id'];
                 $this->orderCatPage($value['cat_pid'] , $catInfo);
             }
         }
