@@ -7,7 +7,7 @@
     <title>{{ config('site.web_name','余白') }}</title>
     <meta name="description"  content="" />
     <meta name="keywords"  content="" />
-    <script type='text/javascript' src='https://cdn.staticfile.org/jquery/1.12.3/jquery.min.js' defer='defer'></script>
+    <script type='text/javascript' src='https://cdn.staticfile.org/jquery/1.12.3/jquery.min.js'></script>
     <script type='text/javascript' src='https://cdn.staticfile.org/jquery-migrate/1.4.0/jquery-migrate.min.js' defer='defer'></script>
     <link type="image/vnd.microsoft.icon" href="/favicon.ico" rel="shortcut icon">
     <link href="{{ elixir('css/all.min.css') }}" type="text/css" rel="stylesheet" />
@@ -120,6 +120,12 @@
     /* <![CDATA[ */
     var ajaxcomment = {"ajax_url":"http:\/\/{{ url('/') }}\/admin-ajax.php","order":"desc","formpostion":"top"};
     /* ]]> */
+</script>
+<script src="{{ asset('js/comment.js') }}"></script>
+<script style="display:none">
+    function index_overloaded(){
+
+    }
 </script>
 <script type='text/javascript' src='//cdn.bootcss.com/jquery/1.8.3/jquery.min.js'></script>
 <script src="https://cdn.staticfile.org/jquery.pjax/1.9.6/jquery.pjax.min.js"></script>

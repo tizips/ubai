@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth'] , function () {
     Route::post('toEditCat' , 'Admin\CatController@toEditCat');
     Route::get('editCatStatus' , 'Admin\CatController@editStatus');
     Route::get('toDelCat/{catId}' , 'Admin\CatController@toDelCat');
+    Route::get('file' , 'Admin\FileController@index');
     Route::get('comment' , 'Admin\CommentController@index');
     Route::get('msg' , 'Admin\MsgController@index');
     Route::get('link' , 'Admin\LinkController@index');

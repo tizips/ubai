@@ -4,6 +4,8 @@
 
     use App\Api\ImageApi;
     use App\Model\Upload;
+    use Qiniu\Auth;
+    use Qiniu\Storage\UploadManager;
     use Request;
     use Intervention\Image\ImageManagerStatic as Image;
 
@@ -11,26 +13,19 @@
     {
 
         public $field = '';             //  上传图片字段
-
         public $savePath = '';              //  图片上传路径
-
         public $path = '';
-
+        public $filePath = '';          //  文件本地绝对路径
+        public $fileName = '';          //  文件名称
         public $isThumb = false;        //  是否生成缩略图
-
         public $width = 300;            //  缩略图宽度
-
         public $height = 300;           //  缩略图高度
-
         public $thumbSavePath = '';          //  图片保存路径
-
         public $thumbPath = '';              //  图片路径
-
         public $isMark = false;         //  是否添加水印
-
         public $mark = '';              //  水印位置
-
         public $extension = '';         //  图片后缀
+        public $isQiniu = false;        //  是否上传七牛云储存
 
         public function upload() {
 
@@ -53,8 +48,8 @@
             }
 
             $this -> extension = $image -> getClientOriginalExtension();
-            $imageName = rand(100,999).date('YmdHis').'.'.$this -> extension;
-            $this -> savePath = '/upload/' . $this -> path . '/' . $imageName;
+            $this->fileName = rand(100,999).date('YmdHis').'.'.$this -> extension;
+            $this -> savePath = '/upload/' . $this -> path . '/' . $this->fileName;
             $this -> path = '/upload/' . $this -> path;
 
             $img = Image::make($image);
@@ -67,7 +62,8 @@
                     return $imageApi -> AjaxReturnError();
                 }
             }
-            $img -> save(public_path().$this->savePath);
+            $this->filePath = public_path().$this->savePath;
+            $img -> save($this->filePath);
 
             if ($this -> isThumb) {
                 $this -> thumb();
@@ -78,12 +74,21 @@
             $upload = new Upload();
 
             $fileArr = array(
-                'file_name'     =>  $imageName,
+                'file_name'     =>  $this->fileName,
 //                'file_title'    =>  $this -> fileTitle,
                 'file_type'     =>  $image -> getClientOriginalExtension(),
                 'file_url'     =>  $this -> savePath,
                 'file_size'   =>  $image -> getClientSize(),
             );
+
+            $this->isQiniu = true;
+            if ($this->isQiniu) {
+                $info = $this -> qiniu();
+                if ($info['status']==0) {
+//                    $this->savePath = $info['msg'];
+                    $fileArr['qiniu_url'] = $info['msg'];
+                }
+            }
 
             $uploadInfo = $upload -> addUpload($fileArr);
 
@@ -94,6 +99,15 @@
                 return $imageApi -> AjaxReturnError();
             }
 
+
+            $this->isQiniu = true;
+            if ($this->isQiniu) {
+//                $info = $this -> qiniu();
+                if ($info['status']==0) {
+                    $this->savePath = '//'.$info['msg'];
+//                    $fileArr['qiniu_url'] = $info['msg'];
+                }
+            }
             $imageApi -> Status = 0;
             $imageApi -> ImageUrl = $this -> savePath;
 
@@ -108,5 +122,34 @@
             $image  -> resizeCanvas($this -> width , $this -> height);
 
             $image -> save(public_path().$this -> savePath);
+        }
+
+        public function qiniu() {
+
+            $bucket     =   config('qiniu.bucket');
+            $SecretKey  =   config('qiniu.SecretKey');
+            $AccessKey  =   config('qiniu.AccessKey');
+            $domain     =   config('qiniu.domain');
+
+            //  构建鉴权对象
+            $auth =  new Auth($AccessKey , $SecretKey);
+            $token = $auth -> uploadToken($bucket);
+
+            $uploadManager = new UploadManager();
+            list($ret , $err) = $uploadManager -> putFile($token,$this->fileName,$this->filePath);
+            if (!$err) {
+                $baseUrl = $domain.'/'.$ret['key'];
+//                $privateUrl = $auth -> privateDownloadUrl($baseUrl);
+                return [
+                    'status'    =>   0,
+                    'msg'       =>  $baseUrl
+                ];
+            } else {
+                return [
+                    'status'    =>   1,
+                    'msg'       =>   $err,
+                ];
+            }
+
         }
     }

@@ -21,7 +21,8 @@ class CreateUploadsTable extends Migration
             $table->string('file_name' , 60)->comment('文件名称');
             $table->string('file_title' , 120)->default("")->comment('文件展示标题');
             $table->string('file_type' , 20)->comment('文件类型');
-            $table->string('file_url' , 120)->comment('文件地址');
+            $table->string('file_url' , 255)->comment('文件地址');
+            $table->string('qiniu_url' , 255)->comment('七牛存储文件地址');
             $table->unsignedInteger('file_size')->comment('文件尺寸大小');
             $table->unsignedSmallInteger('image_width')->default(0)->comment('上传文件为图片下，图片宽度');
             $table->unsignedSmallInteger('image_height')->default(0)->comment('上传文件为图片下，图片高度');

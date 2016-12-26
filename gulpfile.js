@@ -55,7 +55,9 @@ elixir(function (min) {
             'admin/bootstrap-table.js'
         ] , 'public/js/table.min.js')
         .scripts([
-            'home/ajax_comment.js',
+            'home/ajax_comment.js'
+        ] , 'public/js/comment.js')
+        .scripts([
             'home/functions.js'
         ] , 'public/js/all.js');
 });

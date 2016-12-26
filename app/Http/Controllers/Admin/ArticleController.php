@@ -10,6 +10,7 @@ use App\Jobs\UpdateIndexCache;
 use App\Model\Article;
 use App\Model\Category;
 use App\Model\Upload;
+use App\Tool\ImageDealt;
 use Session;
 use Request;
 
@@ -179,10 +180,10 @@ class ArticleController extends Controller
 
     public function uploadPic() {
 
-        $upload = new Upload();
+        $upload = new ImageDealt();
         $upload -> field = 'wangEditorH5File';
-        $upload -> fileTitle = '';
-        $upload -> path = '/upload/article';
+//        $upload -> fileTitle = '';
+        $upload -> path = 'article';
 
         $picInfo = $upload -> upload();
         $picInfo = json_decode($picInfo);
