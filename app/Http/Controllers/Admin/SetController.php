@@ -10,7 +10,6 @@ class SetController extends Controller
     public function index () {
 
         $title = '系统设置';
-        return view('admin.setting' , compact('title'))
-            -> with('user' , Session::get('userInfo'));
+        return view('admin.setting' , compact('title'));
     }
 }

@@ -60,3 +60,8 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth'] , function () {
     Route::post('link/uploadThumb' , 'Admin\LinkController@uploadThumb');
     Route::get('setting' , 'Admin\SetController@index');
 });
+
+Route::get('test' , function () {
+    config(['site.web_name'  =>  'Ubai']);
+    return config('site.web_name');
+});
