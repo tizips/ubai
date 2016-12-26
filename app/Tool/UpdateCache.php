@@ -20,7 +20,41 @@ class UpdateCache
 //            -> with('cat' , $catInfo)
 //            -> with('user' , Session::get('userInfo'));
 //    }
-
+    public function updateCategory($CatID) {
+//        dd($CatID);
+        $cat = new Category();
+        $page = new UpdateCache();
+        $art = new Article();
+        // 根据文章 ID ，查出文章所有栏目 ID
+        $CatArr = $cat -> selectArtCat($CatID);
+//    dd($CatArr);
+        //  遍历查询出所有栏目的子栏目
+        if (!empty($CatArr)) {
+            foreach ($CatArr as $value) {
+                $arr = $cat -> simpleFind($value);
+                $arrInfo = array();
+                if (!empty($arr)) {
+                    foreach ($arr as $val) {
+                        $arrInfo[] = $val['id'];
+                    }
+                }
+                $arrInfo[] = $value;
+//            $CatInfo[] = $value;
+                $artNum = $art -> selectCatArtCount($arrInfo);
+                $pageNum = ceil($artNum / 10);
+                for ($i = 0; $i < $pageNum; $i++) {
+                    $list = $art -> selectCatArticle($i, $arrInfo);
+//                    echo "<pre>";
+//                    print_r($list);
+//                    echo $value.'--'.($i+1);
+//                    echo "</pre>";
+                    Cache::store('file')->forever('category_'.$value.'_'.($i+1),$list);
+                    Cache::store('file')->forever('page_'.$value.'_'.($i+1) , $page -> artPage($i+1,$pageNum,'/'));
+                }
+            }
+        }
+//        dd();
+    }
     public function updateIndex() {
 
         $article = new Article();

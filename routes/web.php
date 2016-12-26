@@ -93,5 +93,5 @@ Route::get('test' , function () {
     }
 });
 Route::get('demo',function (){
-    dd(\Illuminate\Support\Facades\Cache::store('file')->get('category_11_1'));
+    dd(\Illuminate\Support\Facades\Cache::store('file')->forget('category_11_1'));
 });

@@ -16,14 +16,16 @@ class UpdateCategoryCache implements ShouldQueue
     use InteractsWithQueue, Queueable, SerializesModels;
 
     private $CatID;
+    private $oldCatID;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($CatID)
+    public function __construct($CatID , $oldCatID = 0)
     {
         $this->CatID = $CatID;
+        $this->oldCatID = $oldCatID;
     }
 
     /**
@@ -53,12 +55,16 @@ class UpdateCategoryCache implements ShouldQueue
                 $arrInfo[] = $value;
 //            $CatInfo[] = $value;
                 $artNum = $art -> selectCatArtCount($arrInfo);
-                $pageNum = ceil($artNum / 10);
+                if (empty($artNum)) {
+                    Cache::tags(['category',$value])->forget('category_1');
+                }else{
+                    $pageNum = ceil($artNum / 10);
 //            dd($CatInfo);
-                for ($i = 0; $i < $pageNum; $i++) {
-                    $list = $art -> selectCatArticle($i, $arrInfo);
-                    Cache::store('file')->forever('category_'.$value.'_'.($i+1),$list);
-                    Cache::store('file')->forever('page_'.$value.'_'.($i+1) , $page -> artPage($i+1,$pageNum,'/'));
+                    for ($i = 0; $i < $pageNum; $i++) {
+                        $list = $art -> selectCatArticle($i, $arrInfo);
+                        Cache::tags(['category',$value])->forever('category_'.($i+1),$list);
+                        Cache::tags(['category',$value])->forever('page_'.($i+1) , $page -> artPage($i+1,$pageNum,'/'));
+                    }
                 }
             }
         }

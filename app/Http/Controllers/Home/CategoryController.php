@@ -14,8 +14,8 @@ class CategoryController extends Controller
 //        dd(Cache::store('file')->get('category_10_1'));
         return view('home.category')
             ->with('menu' , Cache::get('topMenu'))
-            ->with('art' , Cache::store('file')->get('category_'.$CatID.'_'.$num))
-            ->with('page' , Cache::tags(['category',$CatID,'page'.$num])->get('link'))
+            ->with('art' , Cache::tags(['category',$CatID])->get('category_'.$num))
+            ->with('page' , Cache::tags(['category',$CatID])->get('page_'.$num))
             ->with('link' , Cache::get('link'));
     }
 }

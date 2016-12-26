@@ -14,6 +14,7 @@ use App\Model\Article;
 use App\Model\Category;
 use App\Model\Upload;
 use App\Tool\ImageDealt;
+use App\Tool\UpdateCache;
 use Session;
 use Request;
 
@@ -82,10 +83,15 @@ class ArticleController extends Controller
             }
         }else {
 //            $this->dispatch(new DelCatCache($oldCatId));
-            $this->dispatch(new UpdateCategoryCache(Request::get('cat_id')));
-            $this->dispatch(new UpdateCategoryCache($oldCatId));
+            $updateCache = new UpdateCache();
+            $updateCache -> updateCategory(Request::get('cat_id'));
+//            $this->dispatch(new UpdateCategoryCache(Request::get('cat_id')));
             $this->dispatch(new UpdateArticleCache(Request::get('id')));
             $this->dispatch(new UpdateIndexCache());
+            $this->dispatch(new UpdateCategoryCache($oldCatId));
+//            if (Request::get('cat_id')!=$oldCatId) {
+//                return redirect('admin/editArt/'.Request::get('id'));
+//            }
             return redirect('admin/art');
         }
 
