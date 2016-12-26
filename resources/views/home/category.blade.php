@@ -11,7 +11,7 @@
         <article class="post post-list">
             <div class="info">
                 <h2 itemprop="name headline" class="title">
-                    <a href="/Art/{{ $article -> id }}">{{ $article -> article_title }}</a>
+                    <a href="/Art/{{ $article -> id }}">{{ $article -> title }}</a>
                 </h2>
                 <span class="time">{{ $article -> updated_at->diffForHumans() }}</span>
                 <span class="comment">{{ $article -> cat_name }}</span>
