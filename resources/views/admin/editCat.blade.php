@@ -33,7 +33,7 @@
                                                             <select name="cat_pid" class="selectpicker" data-title="栏目" data-style="btn-default btn-block btn-info btn-fill" data-menu-style="dropdown-blue">
                                                                 <option value="0" selected>顶级栏目</option>
                                                                 @foreach($catInfo as $val)
-                                                                <option value="{{ $val['id'] }}" @if($val['id'] == $cat -> cat_pid ) selected @endif>@if($val['id'] ==0) 顶级栏目 @else {{ $val['cat_title'] }}@endif</option>
+                                                                <option value="{{ $val['id'] }}" @if($val['id'] == $cat->cat_pid ) selected @endif>{{ $val['cat_title'] }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>

@@ -41,10 +41,9 @@ class CatController extends Controller
         if (!$category->validatorCatExists($catId)) {
             abort(404);
         }
-
         $title = '编辑栏目';
         return view('admin.editCat', compact('title'))
-            ->with('catInfo', $category->simpleFind($catId))
+            ->with('catInfo', $category->simpleFind())
             ->with('cat', $category->findCat($catId));
     }
 
