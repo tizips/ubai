@@ -17,6 +17,7 @@
                 </section>
                 <p><meta name="robots" content="nofollow"/></p>
                 <ul class="link-items">
+                    @if(!empty($link))
                     @foreach($link as $val)
                     <li>
                         <a href='{{ $val -> web_url }}' target='_blank' title='{{ $val -> web_name }}'>
@@ -25,6 +26,7 @@
                         </a>
                     </li>
                     @endforeach
+                    @endif
                 </ul>
                 <hr />
             </article>

@@ -33,6 +33,6 @@ class UpdateArticleCache implements ShouldQueue
     {
         $article = new Article();
         $art = $article -> findArtInfo($this->ArtID);
-        Cache::tags(['article' , $this->ArtID]) -> forever('article',$art);
+        Cache::store('file') -> forever('article_'.$this->ArtID,$art);
     }
 }

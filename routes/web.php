@@ -63,6 +63,33 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth'] , function () {
 });
 
 Route::get('test' , function () {
-    config(['site.web_name'  =>  'Ubai']);
-    return config('site.web_name');
+    $cat = new \App\Model\Category();
+    $page = new \App\Tool\UpdateCache();
+    $art = new \App\Model\Article();
+    // 根据文章 ID ，查出文章所有栏目 ID
+    $CatArr = $cat -> selectArtCat(10);
+    $CatArr[] = $art->findArtCat(4);
+    //  遍历查询出所有栏目的子栏目
+    if (!empty($CatArr)) {
+        foreach ($CatArr as $value) {
+            $info = $cat -> simpleFind($value);
+            $CatInfo = array();
+            foreach ($info as $val) {
+                $CatInfo[] = $val['id'];
+            }
+            $CatInfo[] = $value;
+            $artNum = $art -> selectCatArtCount($CatInfo);
+            $pageNum = ceil($artNum / 10);
+            for ($i = 0; $i < $pageNum; $i++) {
+                $list = $art -> selectCatArticle($i, $CatInfo);
+                \Illuminate\Support\Facades\Cache::store('file')->forever('category_'.$value.'_'.($i+1),$list);
+                \Illuminate\Support\Facades\Cache::store('file')->forever('page_'.$value.'_'.($i+1) , $page -> artPage($i+1,$pageNum,'/'));
+            }
+        }
+    }
+
+
+});
+Route::get('demo',function (){
+    dd(\Illuminate\Support\Facades\Cache::store('file')->get('category_10_1'));
 });

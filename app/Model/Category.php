@@ -66,6 +66,21 @@ class Category extends Model
         return $this -> orderCat($catInfo , $catId);
     }
 
+    public function selectArtCat($CatID) {
+        $CatArr = self::join('categories_status' , 'categories.cat_status' , '=' , 'categories_status.id')
+                ->select('categories.id','categories.cat_pid')
+                ->get()
+                ->toArray();
+//        $CatArr = array_except($this->orderCatPage($CatID ,$CatArr) , 0);
+        $CatArr = $this->orderCatPage($CatID ,$CatArr);
+        foreach ($CatArr as $key => $value) {
+            if ($value==0) {
+                unset($CatArr[$key]);
+            }
+        }
+        return $CatArr;
+    }
+
     /** 通过栏目 ID 查询栏目信息
      * @param $catId 需要查询的栏目 ID
      * @return mixed 栏目信息
@@ -83,14 +98,14 @@ class Category extends Model
     /**              简略查询、处理栏目信息并返回栏目信息
      * @return array 栏目信息数组
      */
-    public function simpleFind() {
+    public function simpleFind($CatID = 0) {
         $catInfo = self::join('categories_status' , 'categories.cat_status' , '=' , 'categories_status.id')
             ->select('categories.id as id','cat_name','cat_order','cat_pid','cat_url','cat_status' ,'cat_page' , 'categories_status.id as cat_status' , 'cat_status_name')
             ->orderBy('cat_order' , 'desc')
             ->orderBy('id','asc')
             ->get()
             ->toArray();
-        return $this -> orderCat($catInfo);
+        return $this -> orderCat($catInfo , $CatID);
     }
 
 
@@ -123,6 +138,7 @@ class Category extends Model
         else $catInfo -> cat_status = 0;
         return $catInfo -> save();
     }
+
     /**        添加栏目自动验证
      * @return mixed 验证通过不返回任何元素，验证不通过，通过 Api 返回状态码及消息提示
      */
@@ -200,5 +216,19 @@ class Category extends Model
         $category = array_sort_recursive($category);
         
         return $category;
+    }
+    public function orderCatPage($CatID , $CatArr) {
+        static $catInfo = array();
+        foreach ($CatArr as $value) {
+            $catInfo[$value['id']] = $value;
+        }
+        static $arr = array();
+        foreach ($catInfo as $key => $value) {
+            if ($value['id']==$CatID) {
+                $arr[] = $value['cat_pid'];
+                $this->orderCatPage($value['cat_pid'] , $catInfo);
+            }
+        }
+        return $arr;
     }
 }

@@ -2,16 +2,15 @@
 
 namespace App\Jobs;
 
+use App\Model\Article;
 use App\Model\Category;
-use App\Tool\UpdateCache;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cache;
-use App\Model\Article;
 
-class UpdateCategoryCache implements ShouldQueue
+class UpdateCategories implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -33,9 +32,7 @@ class UpdateCategoryCache implements ShouldQueue
      */
     public function handle()
     {
-
         $cat = new Category();
-        $page = new UpdateCache();
         // 根据文章 ID ，查出文章所有栏目 ID
         $CatArr = $cat -> selectArtCat($this->ArtID);
         //  遍历查询出所有栏目的子栏目
@@ -46,12 +43,9 @@ class UpdateCategoryCache implements ShouldQueue
                 $CatInfo[] = $val['id'];
             }
             $art = new Article();
-            $artNum = $art -> selectCatArtCount($CatInfo);
-            $pageNum = ceil($artNum / 10);
-            for ($i = 0; $i < $pageNum; $i++) {
-                $list = $art -> selectCatArticle($i, $CatInfo);
-                Cache::tags(['category',$value,'page'.$i])->forever('category',$list);
-                Cache::tags(['category' ,$value,'page'.($i+1)]) -> forever('page' , $page -> artPage($i+1,$pageNum,'/'));
+            $artPage = $art -> selectCatArtCount($CatInfo);
+            for ($i = 0;$i * 10 < $artPage;$i++) {
+                Cache::tags(['category',$i])->forever('category',$art -> selectCatArticle($i , $CatInfo));
             }
         }
         // 根据查取的所有栏目 ID ，对文章所有栏目进行更新 / 分页

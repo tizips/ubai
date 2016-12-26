@@ -6,6 +6,8 @@ use App\Api\Api;
 use App\Http\Controllers\Controller;
 use App\Jobs\DelArtCache;
 use App\Jobs\UpdateArticleCache;
+use App\Jobs\UpdateCategories;
+use App\Jobs\UpdateCategoryCache;
 use App\Jobs\UpdateIndexCache;
 use App\Model\Article;
 use App\Model\Category;
@@ -78,6 +80,7 @@ class ArticleController extends Controller
                 return redirect('admin/dustbin');
             }
         }else {
+            $this->dispatch(new UpdateCategoryCache(Request::get('cat_id')));
             $this->dispatch(new UpdateArticleCache(Request::get('id')));
             $this->dispatch(new UpdateIndexCache());
             return redirect('admin/art');

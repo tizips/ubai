@@ -45,6 +45,7 @@
             <div class="menu-menu-container">
                 <ul id="menu-menu" class="menu">
                     <li><a href="{{ url('/') }}">首页</a></li>
+                    @if(!empty($menu))
                     @foreach($menu as $val)
                         <li><a @if(!isset($val['child'])) href="{{ $val['cat_url'] ? $val['cat_url'] : '/Cat/'.$val['id'] }}" @endif>{{ $val['cat_name'] }}</a>
                             @if(isset($val['child']))
@@ -56,6 +57,7 @@
                             @endif
                         </li>
                     @endforeach
+                    @endif
                     <li><a href="/link">链接</a></li>
                     <li><a href="/msg">留言</a></li>
                 </ul>
@@ -91,11 +93,13 @@
     <footer id="footer">
         <section class="links_adlink">
             <ul class="container">
+                @if(!empty($link))
                 @foreach($link as $val)
                     @if($val->show_bottom == 1)
                 <li><a target="_blank" href="{{ $val->web_url }}">{{ $val->web_name }}</a></li>
                     @endif
                 @endforeach
+                @endif
                 <li><a target="_blank" href="http://www.siryin.com/sitemap.xml">地图</a></li>
                 <br />
                 <li>我想背上行囊，去远方的他乡。去寻找你的过往，去实现我的梦想。</li>
