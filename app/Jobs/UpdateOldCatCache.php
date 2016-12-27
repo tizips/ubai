@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cache;
 
-class DelCatCache implements ShouldQueue
+class UpdateOldCatCache implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -34,7 +34,7 @@ class DelCatCache implements ShouldQueue
     public function handle()
     {
         $cat = new Category();
-//        $page = new UpdateCache();
+        $page = new UpdateCache();
         $art = new Article();
         // 根据文章 ID ，查出文章所有栏目 ID
         $CatArr = $cat -> selectArtCat($this->CatID);
@@ -52,12 +52,16 @@ class DelCatCache implements ShouldQueue
                 $arrInfo[] = $value;
 //            $CatInfo[] = $value;
                 $artNum = $art -> selectCatArtCount($arrInfo);
-                $pageNum = ceil($artNum / 10);
+                if (empty($artNum)) {
+                    Cache::tags(['category',$value])->flush();
+                }else{
+                    $pageNum = ceil($artNum / 10);
 //            dd($CatInfo);
-                for ($i = 0; $i < $pageNum; $i++) {
-//                    $list = $art -> selectCatArticle($i, $arrInfo);
-                    Cache::store('file')->forget('category_'.$value.'_'.($i+1));
-                    Cache::store('file')->forget('page_'.$value.'_'.($i+1));
+                    for ($i = 0; $i < $pageNum; $i++) {
+                        $list = $art -> selectCatArticle($i, $arrInfo);
+                        Cache::tags(['category',$value])->forever('category_'.($i+1),$list);
+                        Cache::tags(['category',$value])->forever('page_'.($i+1) , $page -> artPage($i+1,$pageNum,'/'));
+                    }
                 }
             }
         }
