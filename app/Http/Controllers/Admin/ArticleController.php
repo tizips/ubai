@@ -83,12 +83,12 @@ class ArticleController extends Controller
             }
         }else {
 //            $this->dispatch(new DelCatCache($oldCatId));
-            $updateCache = new UpdateCache();
-            $updateCache -> updateCategory(Request::get('cat_id'));
+//            $updateCache = new UpdateCache();
+//            $updateCache -> updateCategory(Request::get('cat_id'));
 //            $this->dispatch(new UpdateCategoryCache(Request::get('cat_id')));
             $this->dispatch(new UpdateArticleCache(Request::get('id')));
             $this->dispatch(new UpdateIndexCache());
-            $this->dispatch(new UpdateCategoryCache($oldCatId));
+//            $this->dispatch(new UpdateCategoryCache($oldCatId));
 //            if (Request::get('cat_id')!=$oldCatId) {
 //                return redirect('admin/editArt/'.Request::get('id'));
 //            }

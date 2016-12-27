@@ -67,30 +67,30 @@ Route::get('test' , function () {
     $page = new \App\Tool\UpdateCache();
     $art = new \App\Model\Article();
     // 根据文章 ID ，查出文章所有栏目 ID
-    $CatArr = $cat -> selectArtCat(11);
+//    $CatArr = $cat -> selectArtCat(11);
 //    dd($CatArr);
     //  遍历查询出所有栏目的子栏目
-    if (!empty($CatArr)) {
-        foreach ($CatArr as $value) {
-            $arr = $cat -> simpleFind($value);
+//    if (!empty($CatArr)) {
+//        foreach ($CatArr as $value) {
+            $arr = $cat -> simpleFind(10);
             $arrInfo = array();
             if (!empty($arr)) {
                 foreach ($arr as $val) {
                     $arrInfo[] = $val['id'];
                 }
             }
-            $arrInfo[] = $value;
+            $arrInfo[] = 10;
 //            $CatInfo[] = $value;
-            $artNum = $art -> selectCatArtCount($arrInfo);
-            $pageNum = ceil($artNum / 10);
+//            $artNum = $art -> selectCatArtCount($arrInfo);
+//            $pageNum = ceil($artNum / 10);
 //            dd($CatInfo);
-            for ($i = 0; $i < $pageNum; $i++) {
-                $list = $art -> selectCatArticle($i, $arrInfo);
-                Cache::store('file')->forever('category_'.$value.'_'.($i+1),$list);
-                Cache::store('file')->forever('page_'.$value.'_'.($i+1) , $page -> artPage($i+1,$pageNum,'/'));
-            }
-        }
-    }
+//            for ($i = 0; $i < $pageNum; $i++) {
+//                $list = $art -> selectCatArticle($i, $arrInfo);
+//                Cache::store('file')->forever('category_'.$value.'_'.($i+1),$list);
+//                Cache::store('file')->forever('page_'.$value.'_'.($i+1) , $page -> artPage($i+1,$pageNum,'/'));
+//            }
+//        }
+//    }
 });
 Route::get('demo',function (){
     dd(\Illuminate\Support\Facades\Cache::store('file')->forget('category_11_1'));
