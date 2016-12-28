@@ -16,16 +16,14 @@ class UpdateCategoryCache implements ShouldQueue
     use InteractsWithQueue, Queueable, SerializesModels;
 
     private $CatID;
-    private $oldCatID;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($CatID , $oldCatID = 0)
+    public function __construct($CatID)
     {
         $this->CatID = $CatID;
-        $this->oldCatID = $oldCatID;
     }
 
     /**
@@ -39,8 +37,9 @@ class UpdateCategoryCache implements ShouldQueue
         $cat = new Category();
         $page = new UpdateCache();
         $art = new Article();
-        // 根据文章 ID ，查出文章所有栏目 ID
+        // 根据文章 ID ，查出修改文章后需要更新的所有栏目 ID
         $CatArr = $cat -> selectArtCat($this->CatID);
+        print_r($CatArr);   // 10  1
 //    dd($CatArr);
         //  遍历查询出所有栏目的子栏目
         if (!empty($CatArr)) {
@@ -62,12 +61,16 @@ class UpdateCategoryCache implements ShouldQueue
 //            dd($CatInfo);
                     for ($i = 0; $i < $pageNum; $i++) {
                         $list = $art -> selectCatArticle($i, $arrInfo);
+//                        echo $list.'\n';
                         Cache::tags(['category',$value])->forever('category_'.($i+1),$list);
                         Cache::tags(['category',$value])->forever('page_'.($i+1) , $page -> artPage($i+1,$pageNum,'/'));
                     }
                 }
+                $arrInfo = null;
+                unset($arrInfo);
             }
         }
+        unset($CatArr);
         // 根据查取的所有栏目 ID ，对文章所有栏目进行更新 / 分页
     }
 }

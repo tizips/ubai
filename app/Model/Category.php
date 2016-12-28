@@ -219,13 +219,20 @@ class Category extends Model
         
         return $category;
     }
+    // 将
     public function orderCatPage($CatID , $CatArr) {
-        static $catInfo = array();
-        foreach ($CatArr as $value) {
-            $catInfo[$value['id']] = $value;
-        }
+//        $catInfo = array();
+//        foreach ($CatArr as $value) {
+//            $catInfo[$value['id']] = $value;
+//        }
+//        $catArr = array();
+//        $arr = array();
+//        foreach ($CatArr as $value) {
+//
+//            $catArr[$value['id']] = $value;
+//        }
         static $arr = array();
-        foreach ($catInfo as $value) {
+        foreach ($CatArr as $value) {
             if ($value['id']==$CatID) {
                 $arr[] = $value['id'];
                 $this->orderCatPage($value['cat_pid'] , $catInfo);
