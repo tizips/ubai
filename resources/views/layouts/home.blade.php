@@ -102,7 +102,7 @@
                     @endif
                 @endforeach
                 @endif
-                <li><a target="_blank" href="http://www.siryin.com/sitemap.xml">地图</a></li>
+                <li><a target="_blank" href="{{ asset('sitemap.xml') }}">地图</a></li>
                 <br />
                 <li>我想背上行囊，去远方的他乡。去寻找你的过往，去实现我的梦想。</li>
             </ul>
@@ -114,9 +114,9 @@
 </section>
 <div class="clearer" style="height:1px;"></div>
 <div class="search_form">
-    <form method="get" action="{{ url('/') }}">
+    <form method="get" action="{{ url('toSearch') }}">
         <p class="micro mb-">你想搜索什么...</p>
-        <input class="search_key" name="s" placeholder="Enter search keywords..." type="text" value="">
+        <input class="search_key" name="key" placeholder="Enter search keywords..." type="text" value="">
         <button alt="Search" type="submit">Search</button>
     </form>
     <div class="search_close"></div>
@@ -124,7 +124,7 @@
 {{--<link rel='stylesheet' id='wp-markdown-prettify-css'  href='/Static/home/css/prettify.css' type='text/css' media='all' />--}}
 <script type='text/javascript'>
     /* <![CDATA[ */
-    var ajaxcomment = {"ajax_url":"http:\/\/{{ url('/') }}\/admin-ajax.php","order":"desc","formpostion":"top"};
+    var ajaxcomment = {"ajax_url":"{{ url('/toAjaxComment') }}","order":"desc","formpostion":"top"};
     /* ]]> */
 </script>
 <script src="{{ asset('js/comment.js') }}"></script>
@@ -138,9 +138,6 @@
 <script src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js"></script>
 {{--<script type='text/javascript' src='/Static/home/js/ajax_comment.js'></script>--}}
 <script src="{{ asset('js/all.js') }}"></script>
-<script>
-
-</script>
 </body>
 
 </html>
