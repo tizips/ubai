@@ -16,6 +16,7 @@ Route::get('link' ,'Home\LinkController@index');
 Route::get('Art/{ArtID}' ,'Home\ArticleController@index');
 Route::get('Cat/{CatID}', 'Home\CategoryController@index');
 Route::get('msg', 'Home\MsgController@index');
+Route::post('toAjaxComment' , 'Home\CommentController@toAddComment');
 
 Auth::routes();
 
@@ -93,5 +94,6 @@ Route::get('test' , function () {
 //    }
 });
 Route::get('demo',function (){
-    dd(\Illuminate\Support\Facades\Cache::store('file')->forget('category_11_1'));
+//    dd(\Illuminate\Support\Facades\Cache::store('file')->forget('category_11_1'));
+    return 'https://gravatar.css.network/avatar/'.md5('tizips@qq.com').'.jpg?s=32';
 });

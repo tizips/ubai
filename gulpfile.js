@@ -21,7 +21,7 @@ elixir(function (min) {
         ] , 'public/css/admin.min.css')
         .styles([
             'home/style.css'
-        ] , 'public/css/all.css');
+        ] , 'public/css/all.min.css');
     min.version('css/all.min.css');
 });
 

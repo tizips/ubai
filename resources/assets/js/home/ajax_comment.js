@@ -5,7 +5,7 @@ jQuery(document).ready(function (jQuery) {
     jQuery(document).on("submit", "#commentform", function () {
         jQuery.ajax({
             url: ajaxcomment.ajax_url,
-            data: jQuery(this).serialize() + "&action=ajax_comment",
+            data: jQuery(this).serialize(),
             type: jQuery(this).attr('method'),
             beforeSend: addComment.createButterbar("提交中...."),
             error: function (request) {
@@ -22,6 +22,10 @@ jQuery(document).ready(function (jQuery) {
                     respond = t.I(t.respondId),
                     post = t.I('comment_post_ID').value,
                     parent = t.I('comment_parent').value;
+                // if (data['error']) {
+                //     t.createButterbar(data['error']);
+                //     return false;
+                // }
                 if (parent != '0') {
                     jQuery('#respond').before('<ol class="children">' + data + '</ol>');
                 } else if (!jQuery('.' + __list).length) {

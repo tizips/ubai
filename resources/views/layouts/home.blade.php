@@ -10,7 +10,7 @@
     <script type='text/javascript' src='https://cdn.staticfile.org/jquery/1.12.3/jquery.min.js'></script>
     <script type='text/javascript' src='https://cdn.staticfile.org/jquery-migrate/1.4.0/jquery-migrate.min.js' defer='defer'></script>
     <link type="image/vnd.microsoft.icon" href="/favicon.ico" rel="shortcut icon">
-    <link href="{{ elixir('css/all.min.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/all.min.css') }}" type="text/css" rel="stylesheet" />
     <link href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>

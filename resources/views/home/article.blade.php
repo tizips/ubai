@@ -20,6 +20,7 @@
             <div class="meta">
                 <p>— 于 {{ $art->updated_at->format('Y年m月d') }} ，共写了 {{ mb_strlen($art->content , 'UTF-8') }} 字；</p>
                 {{--<p>— 本文共有 2 个标签：标签：<a href="#" rel="tag">主题</a>, <a href="#" rel="tag">分享</a></p>--}}
+                <p>- 转载 ：<a href="" rel="nofollow">test</a></p>
             </div>
 
         </article>
@@ -42,15 +43,15 @@
         <h3 id="comments">
             0条回应：&#8220;{{ $art->author.' - '.$art->title }}&#8221;	</h3>
 
-        {{--<div class="navigation">--}}
+        <div class="navigation">
             {{--<div class="alignleft">--}}
                 {{--<a href="http://www.siryin.com/link/comment-page-2#comments" >&laquo; 先前评论</a>--}}
             {{--</div>--}}
-            {{--<div class="alignright"></div>--}}
-        {{--</div>--}}
+            <div class="alignright"></div>
+        </div>
 
-        {{--<ol class="commentlist">--}}
-            {{--<li class="comment even thread-even depth-1 parent" id="comment-981">--}}
+        <ol class="commentlist">
+            <li class="comment even thread-even depth-1 parent" id="comment-981">
                 {{--<div id="div-comment-981" class="comment-body">--}}
                     {{--<div class="comment-author vcard">--}}
                         {{--<img alt='' src='http://cn.gravatar.com/avatar/571f51a0f082025db7216ad983449d0d?s=32&#038;r=g' class='avatar avatar-32 photo' height='32' width='32' />--}}
@@ -155,8 +156,8 @@
                         {{--</ul><!-- .children -->--}}
                     {{--</li><!-- #comment-## -->--}}
                 {{--</ul><!-- .children -->--}}
-            {{--</li><!-- #comment-## -->--}}
-        {{--</ol>--}}
+            </li><!-- #comment-## -->
+        </ol>
 
         {{--<div class="navigation">--}}
             {{--<div class="alignleft"><a href="http://www.ubai.me/link/comment-page-2#comments" >&laquo; 先前评论</a></div>--}}
@@ -166,12 +167,36 @@
 
 
         <div id="respond" class="comment-respond">
-            <h3 id="reply-title" class="comment-reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/1388.html#respond" style="display:none;">取消回复</a></small></h3>
+            <h3 id="reply-title" class="comment-reply-title">发表评论
+                <small>
+                    <a rel="nofollow" id="cancel-comment-reply-link" href="{{ url('Art/'.$art->id) }}#respond" style="display:none;">取消回复</a>
+                </small>
+            </h3>
             <form action="{{ url('toComment') }}" method="post" id="commentform" class="comment-form">
-                <p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" /></p>
-                <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" /></p>
-                <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
-                <p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="w" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea><textarea name="comment" cols="100%" rows="4" style="display:none"></textarea></p><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论" /> <input type='hidden' name='comment_post_ID' value='1388' id='comment_post_ID' />
+                {{ csrf_field() }}
+                <p class="comment-notes">
+                    <span id="email-notes">电子邮件地址不会被公开。</span>
+                </p>
+                <p class="comment-form-author">
+                    <label for="author">姓名</label>
+                    <input id="author" name="user_name" type="text" value="" size="30" maxlength="245" />
+                </p>
+                <p class="comment-form-email">
+                    <label for="email">电子邮件</label>
+                    <input id="email" name="user_email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" />
+                </p>
+                <p class="comment-form-url">
+                    <label for="url">站点</label>
+                    <input id="url" name="user_url" type="text" value="" size="30" maxlength="200" />
+                </p>
+                <p class="comment-form-comment">
+                    <label for="comment">评论</label>
+                    <textarea id="comment" name="content" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea>
+                    <textarea name="comment" cols="100%" rows="4" style="display:none"></textarea>
+                </p>
+                <p class="form-submit">
+                    <input name="submit" type="submit" id="submit" class="submit" value="发表评论" />
+                    <input type='hidden' name='comment_post_id' value='{{ $art->id }}' id='comment_post_ID' />
                     <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
                 </p>
             </form>

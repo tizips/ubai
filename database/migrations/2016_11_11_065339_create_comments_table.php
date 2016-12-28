@@ -18,10 +18,12 @@ class CreateCommentsTable extends Migration
 
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('comment_user_name')->index()->comment('评论者');
-            $table->string('comment_content' , 500)->index()->comment('评论内容');
-            $table->unsignedInteger('user_pid')->default(0)->comment('评论对象');
-            $table->tinyInteger('comment_status')->defautl(0)->comment('评论对象');
+            $table->unsignedInteger('name')->index()->comment('评论者');
+            $table->string('content',500)->ablenull()->default('')->comment('评论内容');
+            $table->string('comment',500)->ablenull()->default('')->comment('回复');
+            $table->unsignedInteger('comment_post_id')->default(0)->comment('评论对象');
+            $table->integer('comment_parent')->ablenull()->default(0)->comment('父级评论');
+            $table->tinyInteger('comment_status')->defautl(0)->comment('评论状态');
             $table->timestamps();
         });
     }

@@ -172,7 +172,7 @@ class Article extends Model
 
         return self::join('users' , 'articles.author' , '=' , 'users.id')
             ->join('categories' , 'articles.cat_id' , '=' , 'categories.id')
-            ->select('title','cat_name','articles.thumb','users.pen_name as author','users.thumb as user_thumb','users.github','users.content as author_description','articles.content','articles.seo_title','articles.seo_keyword','articles.seo_description','articles.updated_at')
+            ->select('articles.id','title','cat_name','articles.thumb','users.pen_name as author','users.thumb as user_thumb','users.github','users.content as author_description','articles.content','articles.seo_title','articles.seo_keyword','articles.seo_description','articles.updated_at')
             ->find($ArtID);
     }
 
