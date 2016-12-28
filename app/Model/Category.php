@@ -106,6 +106,7 @@ class Category extends Model
             ->orderBy('id','asc')
             ->get()
             ->toArray();
+//        dd($this -> orderCat($catInfo , $CatID));
         return $this -> orderCat($catInfo , $CatID);
     }
 

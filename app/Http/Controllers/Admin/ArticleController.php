@@ -70,7 +70,7 @@ class ArticleController extends Controller
             abort('404');
         }
         $article->validatorArticle(Request::get('id'));
-        $oldCatId = $article->findArtCat(Request::get('id'));
+//        $oldCatId = $article->findArtCat(Request::get('id'));
         $art = $article -> updateArt();
         if (empty($art)) {
             return 'error';
@@ -86,17 +86,10 @@ class ArticleController extends Controller
 //            $this->dispatch(new DelCatCache($oldCatId));
 //            $updateCache = new UpdateCache();
 //            $updateCache -> updateCategory(Request::get('cat_id'));
-
-//            if (Request::get('cat_id')!=$oldCatId) {
-//                $this->dispatch(new UpdateOldCatCache($oldCatId));
-////                return redirect('admin/editArt/'.Request::get('id'));
-//            }
 //            $this->dispatch(new UpdateCategoryCache(Request::get('cat_id')));
             $this->dispatch(new UpdateArticleCache(Request::get('id')));
             $this->dispatch(new UpdateIndexCache());
-//            if (Request::get('cat_id')!=$oldCatId) {
-//                return redirect('admin/editArt/'.Request::get('id'));
-//            }
+//            $this->dispatch(new UpdateCategoryCache($oldCatId));
             return redirect('admin/art');
         }
 

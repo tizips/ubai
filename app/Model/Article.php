@@ -118,11 +118,10 @@ class Article extends Model
     }
 
     /**                 根据栏目 ID ，查询文章
-     * @param $offset   偏移量
      * @param $CatId    栏目 ID
      * @return mixed 返回查询结果
      */
-    public function selectCatArticle($offset , $CatArr) {
+    public function selectCatArticle($CatArr) {
 
         return self::join('users' , 'articles.author' , '=' , 'users.id')
             ->join('categories' , 'articles.cat_id' , '=' , 'categories.id')
@@ -130,9 +129,7 @@ class Article extends Model
             ->select('articles.id' , 'articles.title' ,'categories.cat_name' , 'articles.thumb' , 'articles.content' , 'articles.seo_title' , 'articles.seo_keyword' , 'articles.seo_description' , 'users.name as author' , 'articles.updated_at')
             ->whereIn('cat_id' , $CatArr)
             ->orderBy('id','desc')
-            ->take(10)
-            ->skip($offset)
-            ->get();
+            ->paginate(10);
     }
 
     public function selectCatArtCount($CatArr) {
