@@ -11,8 +11,7 @@ use Request;
 class CategoryController extends Controller
 {
     public function index($CatID) {
-
-<<<<<<< HEAD
+        
 //        $num = Request::input('page' , 1);
 //        dd(Cache::store('file')->get('category_10_1'));
         $cat = new Category();
@@ -26,10 +25,7 @@ class CategoryController extends Controller
         $CatInfo[] = $CatID;
 //        dd($CatInfo);
 //        dd($art->selectCatArticle($CatInfo));
-=======
-        $num = Request::input('page' , 1);
-//        dd(Cache::tags(['category',11])->get('category_1'));
->>>>>>> 0dcd1f5a56fb1cd152a695aa048922a702eb9343
+
         return view('home.category')
             ->with('menu' , Cache::get('topMenu'))
             ->with('art' , $art -> selectCatArticle($CatInfo))
