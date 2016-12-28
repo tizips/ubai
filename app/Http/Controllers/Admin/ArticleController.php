@@ -87,11 +87,11 @@ class ArticleController extends Controller
 //            $updateCache = new UpdateCache();
 //            $updateCache -> updateCategory(Request::get('cat_id'));
 
-            if (Request::get('cat_id')!=$oldCatId) {
-                $this->dispatch(new UpdateOldCatCache($oldCatId));
-//                return redirect('admin/editArt/'.Request::get('id'));
-            }
-            $this->dispatch(new UpdateCategoryCache(Request::get('cat_id')));
+//            if (Request::get('cat_id')!=$oldCatId) {
+//                $this->dispatch(new UpdateOldCatCache($oldCatId));
+////                return redirect('admin/editArt/'.Request::get('id'));
+//            }
+//            $this->dispatch(new UpdateCategoryCache(Request::get('cat_id')));
             $this->dispatch(new UpdateArticleCache(Request::get('id')));
             $this->dispatch(new UpdateIndexCache());
 //            if (Request::get('cat_id')!=$oldCatId) {
