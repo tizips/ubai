@@ -178,11 +178,11 @@
                     <span id="email-notes">电子邮件地址不会被公开。</span>
                 </p>
                 <p class="comment-form-author">
-                    <label for="author">姓名</label>
+                    <label for="author">姓名 <span class="required">*</span></label>
                     <input id="author" name="user_name" type="text" value="" size="30" maxlength="245" />
                 </p>
                 <p class="comment-form-email">
-                    <label for="email">电子邮件</label>
+                    <label for="email">电子邮件 <span class="required">*</span></label>
                     <input id="email" name="user_email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" />
                 </p>
                 <p class="comment-form-url">
@@ -190,7 +190,7 @@
                     <input id="url" name="user_url" type="text" value="" size="30" maxlength="200" />
                 </p>
                 <p class="comment-form-comment">
-                    <label for="comment">评论</label>
+                    <label for="comment">评论 <span class="required">*</span></label>
                     <textarea id="comment" name="content" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea>
                     <textarea name="comment" cols="100%" rows="4" style="display:none"></textarea>
                 </p>

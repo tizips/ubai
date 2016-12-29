@@ -252,7 +252,8 @@ img {border:0;max-width:100%;}
 #commentform p.comment-notes {display:none;}
 #commentform a {line-height:2.6em;}
 #commentform label {display:block;position:relative;right:0;margin:10px 0 -4px 0;}
-#commentform label[for=comment] {display:none;}
+#commentform label span.required { color: #f55;}
+/*#commentform label[for=comment] {display:none;}*/
 #commentform input,#commentform textarea {max-width:220px;width:100%;padding:8px 10px;margin:10px 0 0 0;border:2px solid #eee;border-radius:3px;background:#fff;font-size:13px;line-height:18px;}
 #commentform textarea {max-width:100%;width:100%;height:8em;}
 #commentform textarea:focus,#commentform input:focus {border:2px solid #f55;}
