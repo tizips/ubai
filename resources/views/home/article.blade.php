@@ -20,7 +20,7 @@
             <div class="meta">
                 <p>— 于 {{ $art->updated_at->format('Y年m月d') }} ，共写了 {{ mb_strlen($art->content , 'UTF-8') }} 字；</p>
                 {{--<p>— 本文共有 2 个标签：标签：<a href="#" rel="tag">主题</a>, <a href="#" rel="tag">分享</a></p>--}}
-                <p>- 转载 ：<a href="" rel="nofollow">test</a></p>
+                <p>— 转载 ：<a href="" rel="nofollow">test</a></p>
             </div>
 
         </article>
@@ -51,25 +51,27 @@
         </div>
 
         <ol class="commentlist">
-            <li class="comment even thread-even depth-1 parent" id="comment-981">
-                {{--<div id="div-comment-981" class="comment-body">--}}
-                    {{--<div class="comment-author vcard">--}}
-                        {{--<img alt='' src='http://cn.gravatar.com/avatar/571f51a0f082025db7216ad983449d0d?s=32&#038;r=g' class='avatar avatar-32 photo' height='32' width='32' />--}}
-                        {{--<cite class="fn"><a href='http://www.nameluo.com' rel='external nofollow' class='url'>小萝博客</a></cite>--}}
-                        {{--<span class="says">说道：</span>--}}
-                    {{--</div>--}}
+            @if(!empty($comment))
+                @foreach($comment as $val)
+            <li class="comment even thread-even depth-1 parent" id="comment-{{ $val->comment_id }}">
+                <div id="div-comment-{{ $val->comment_id }}" class="comment-body">
+                    <div class="comment-author vcard">
+                        <img alt='' src='{{ $val->comment_user_thumb }}' class='avatar avatar-32 photo' height='32' width='32' />
+                        <cite class="fn"><a href='{{ $val->comment_user_url }}' rel='external nofollow' class='url'>{{ $val->comment_user_name }}</a></cite>
+                        <span class="says">说道：</span>
+                    </div>
 
-                    {{--<div class="comment-meta commentmetadata">--}}
-                        {{--<a href="http://www.siryin.com/link/comment-page-3#comment-981">--}}
-                            {{--2016年11月18日 下午4:49--}}
-                        {{--</a>--}}
-                    {{--</div>--}}
-                    {{--<p>麻烦修改一下孟子非博客为小萝博客</p>--}}
+                    <div class="comment-meta commentmetadata">
+                        <a href="{{ url()->current() }}#comment-{{ $val->comment_id }}">
+                            {{ $val->created_at->format('Y年m月d H:i') }}
+                        </a>
+                    </div>
+                    <p>{{ $val->comment_content }}</p>
 
-                    {{--<div class="reply">--}}
-                        {{--<a rel='nofollow' class='comment-reply-link' href='http://www.siryin.com/link?replytocom=981#respond' onclick='return addComment.moveForm( "div-comment-981", "981", "respond", "52" )' aria-label='回复给小萝博客'>回复</a>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+                    <div class="reply">
+                        <a rel='nofollow' class='comment-reply-link' href='{{ url()->previous() }}&?replytocom={{ $val->comment_id }}#respond' onclick='return addComment.moveForm( "div-comment-{{ $val->comment_id }}", "{{ $val->comment_id }}", "respond", "52" )' aria-label='回复给{{ $val->comment_user_name }}'>回复</a>
+                    </div>
+                </div>
                 {{--<ul class="children">--}}
                     {{--<li class="comment byuser comment-author-yxs bypostauthor odd alt depth-2" id="comment-982">--}}
                         {{--<div id="div-comment-982" class="comment-body">--}}
@@ -93,7 +95,9 @@
                         {{--</div>--}}
                     {{--</li><!-- #comment-## -->--}}
                 {{--</ul><!-- .children -->--}}
-            {{--</li><!-- #comment-## -->--}}
+            </li><!-- #comment-## -->
+                @endforeach
+            @endif
             {{--<li class="comment even thread-odd thread-alt depth-1 parent" id="comment-931">--}}
                 {{--<div id="div-comment-931" class="comment-body">--}}
                     {{--<div class="comment-author vcard">--}}
@@ -156,7 +160,7 @@
                         {{--</ul><!-- .children -->--}}
                     {{--</li><!-- #comment-## -->--}}
                 {{--</ul><!-- .children -->--}}
-            </li><!-- #comment-## -->
+            {{--</li><!-- #comment-## -->--}}
         </ol>
 
         {{--<div class="navigation">--}}

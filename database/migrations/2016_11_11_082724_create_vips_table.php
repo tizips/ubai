@@ -20,8 +20,8 @@ class CreateVipsTable extends Migration
             $table->increments('id');
             $table->char('user_name' , 20)->unique()->comment('会员名');
             $table->string('user_email' , 40)->unique()->default('')->comment('会员邮箱');
-            $table->string('user_url' , 60)->unique()->comment('会员站点');
-            $table->string('thumb' , 60)->default('')->comment('会员缩略图');
+            $table->string('user_url' , 60)->unique()->default('')->comment('会员站点');
+            $table->string('thumb' , 120)->default('')->comment('会员缩略图');
             $table->unsignedTinyInteger('user_status')->default(0)->comment('状态');
             $table->timestamps();
         });

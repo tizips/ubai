@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Validator;
 use Illuminate\Database\Eloquent\Model;
+use Request;
 
 class Vip extends Model
 {
@@ -16,8 +17,8 @@ class Vip extends Model
     public function findVip() {
 
     }
-    public function ValidatorVipExists() {
-
+    public function ValidatorVipExists($vip) {
+        return self::where('user_name','=',$vip)->first();
     }
     public function ValidatorVip($vip) {
         $validator = Validator::make($vip , [
