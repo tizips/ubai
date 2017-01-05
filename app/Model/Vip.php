@@ -14,8 +14,9 @@ class Vip extends Model
         $input['thumb'] = 'https://gravatar.css.network/avatar/'.md5($input['user_email']).'.jpg?s=32';
         return self::create($input);
     }
-    public function findVip() {
-
+    public function findVip($VipID) {
+        return self::select('user_name')
+            ->find($VipID);
     }
     public function ValidatorVipExists($vip) {
         return self::where('user_name','=',$vip)->first();

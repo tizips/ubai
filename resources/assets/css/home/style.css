@@ -109,11 +109,8 @@ img {border:0;max-width:100%;}
     70% {transform:scale(.95);}
     100% {transform:scale(1);}
 }
-<<<<<<< HEAD
 /*#main {padding: 20px 0;}*/
 
-=======
->>>>>>> b33fab6151b72d0a1a0282a6f91191b800e717cf
 #slide{margin-bottom:10px;overflow:hidden;}
 #slide img{width:800px;max-width:100%;}
 /* 文章列表 */
@@ -261,12 +258,12 @@ img {border:0;max-width:100%;}
 #commentform input#submit:hover {background:#f55;border:2px solid #f55;color:#fff;}
 .butterBar {width:100%;line-height:80px;position:fixed;text-align:center;left:0;top:0;z-index:11;background:rgba(255,255,255,.8);box-shadow:0 1px 3px #eee;}
 .butterBar-message {font-size:14px;}
-.commentlist {counter-reset:comment-floor;padding:0 6%;}
+.commentlist {counter-reset:comment-floor;padding:0 6%; display: none;}
 .commentlist > .comment {position:relative;}
 .commentlist > .comment:before {content:'#'counter(comment-floor);counter-increment:comment-floor;font-size:16px;position:absolute;top:30px;right:0;color:#ccc;}
 /* 按钮 */
 .navigator,.navigation {text-align:center;margin:2% 0;padding:2% 0;overflow:hidden;}
-.navigator a,.navigation a,.navigation span {color:#faa;cursor:pointer; margin: 0 15px;}
+.navigator a,.navigation a,.navigation span {color:#f55;cursor:pointer;}
 .navigator a i{ font-size: 42px;}
 .navigator a:hover,.navigation .current,.navigation a:hover {box-shadow:0 0 0 1px #fff inset,0 2px 15px -3px #ccc inset,0 -1px 5px 0 #fff inset,0 0 0 1px #eee;background:#fafafa;color:#aaa;}
 .navigation {text-align:center;}

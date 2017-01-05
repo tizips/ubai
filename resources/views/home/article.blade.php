@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('Content')
-<div class="pjax">
+<div id="pjax">
     <main id="main">
         <section id="slide">
             <img src="{{ $art->thumb ? asset($art->thumb) : asset('/upload/article/76520161225151032.jpg') }}">
@@ -44,131 +44,47 @@
             0条回应：&#8220;{{ $art->author.' - '.$art->title }}&#8221;	</h3>
 
         <div class="navigation">
-            {{--<div class="alignleft">--}}
-                {{--<a href="http://www.siryin.com/link/comment-page-2#comments" >&laquo; 先前评论</a>--}}
-            {{--</div>--}}
-            <div class="alignright"></div>
+            <div class="alignTop">
+                <a href="{{ url()->previous() }}#comments" ><i class="iconfont">&#xe60c;</i></a>
+            </div>
+            <div class="alignBottom"></div>
         </div>
 
         <ol class="commentlist">
             @if(!empty($comment))
                 @foreach($comment as $val)
-            <li class="comment even thread-even depth-1 parent" id="comment-{{ $val->comment_id }}">
-                <div id="div-comment-{{ $val->comment_id }}" class="comment-body">
+            <li class="comment even thread-even depth-1 parent" id="comment-{{ $val['comment_id'] }}">
+                <div id="div-comment-{{ $val['comment_id'] }}" class="comment-body">
                     <div class="comment-author vcard">
-                        <img alt='' src='{{ $val->comment_user_thumb }}' class='avatar avatar-32 photo' height='32' width='32' />
-                        <cite class="fn"><a href='{{ $val->comment_user_url }}' rel='external nofollow' class='url'>{{ $val->comment_user_name }}</a></cite>
+                        <img alt='' src='{{ $val['comment_user_thumb'] }}' class='avatar avatar-32 photo' height='32' width='32' />
+                        <cite class="fn"><a href='{{ $val['comment_user_url'] }}' rel='external nofollow' class='url'>{{ $val['comment_user_name'] }}</a></cite>
                         <span class="says">说道：</span>
                     </div>
 
                     <div class="comment-meta commentmetadata">
-                        <a href="{{ url()->current() }}#comment-{{ $val->comment_id }}">
-                            {{ $val->created_at->format('Y年m月d H:i') }}
+                        <a href="{{ url()->current() }}#comment-{{ $val['comment_id'] }}">
+                            {{ $val['created_at'] }}
                         </a>
                     </div>
-                    <p>{{ $val->comment_content }}</p>
+                    <p>{{ $val['comment_content'] }}</p>
 
                     <div class="reply">
-                        <a rel='nofollow' class='comment-reply-link' href='{{ url()->previous() }}&?replytocom={{ $val->comment_id }}#respond' onclick='return addComment.moveForm( "div-comment-{{ $val->comment_id }}", "{{ $val->comment_id }}", "respond", "52" )' aria-label='回复给{{ $val->comment_user_name }}'>回复</a>
+                        <a rel='nofollow' class='comment-reply-link' href='{{ url()->previous() }}?replytocom={{ $val['comment_id'] }}#respond' onclick='return addComment.moveForm( "div-comment-{{ $val['comment_id'] }}", "{{ $val['comment_id'] }}", "respond", "52" )' aria-label='回复给{{ $val['comment_user_name'] }}'>回复</a>
                     </div>
                 </div>
-                {{--<ul class="children">--}}
-                    {{--<li class="comment byuser comment-author-yxs bypostauthor odd alt depth-2" id="comment-982">--}}
-                        {{--<div id="div-comment-982" class="comment-body">--}}
-                            {{--<div class="comment-author vcard">--}}
-                                {{--<img alt='' src='http://cn.gravatar.com/avatar/2106e2c3bad17698267dd8d101033491?s=32&#038;r=g' class='avatar avatar-32 photo' height='32' width='32' />--}}
-                                {{--<cite class="fn">尹先生</cite><span class="says">说道：</span>--}}
-                            {{--</div>--}}
+                @if (!empty($val['child']))
+                    {{ \App\Tool\CommentDealt::showChildComment($val['child']) }}
+                @endif
 
-                            {{--<div class="comment-meta commentmetadata">--}}
-                                {{--<a href="http://www.siryin.com/link/comment-page-3#comment-982">--}}
-                                    {{--2016年11月18日 下午6:18--}}
-                                {{--</a>--}}
-                            {{--</div>--}}
-
-                            {{--<p>@<a href="#comment-981">小萝博客</a>--}}
-                            {{--<p>好久不见呀，已经修改完毕了</p>--}}
-
-                            {{--<div class="reply">--}}
-                                {{--<a rel='nofollow' class='comment-reply-link' href='http://www.siryin.com/link?replytocom=982#respond' onclick='return addComment.moveForm( "div-comment-982", "982", "respond", "52" )' aria-label='回复给尹先生'>回复</a>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</li><!-- #comment-## -->--}}
-                {{--</ul><!-- .children -->--}}
             </li><!-- #comment-## -->
                 @endforeach
             @endif
-            {{--<li class="comment even thread-odd thread-alt depth-1 parent" id="comment-931">--}}
-                {{--<div id="div-comment-931" class="comment-body">--}}
-                    {{--<div class="comment-author vcard">--}}
-                        {{--<img alt='' src='http://cn.gravatar.com/avatar/08b2775a4a23434e5d30ca08eb4c116c?s=32&#038;r=g' srcset='http://cn.gravatar.com/avatar/08b2775a4a23434e5d30ca08eb4c116c?s=64&amp;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' />			<cite class="fn"><a href='http://www.m1ku.cc/' rel='external nofollow' class='url'>某宅</a></cite><span class="says">说道：</span>		</div>--}}
-
-                    {{--<div class="comment-meta commentmetadata"><a href="http://www.siryin.com/link/comment-page-3#comment-931">--}}
-                            {{--2016年10月8日 下午10:15</a>		</div>--}}
-
-                    {{--<p>更换域名了-0- 博主 <a href="http://www.m1ku.cc/" rel="nofollow">http://www.m1ku.cc/</a><br />--}}
-                        {{--话说。新主题相当不错啊<br />--}}
-                        {{--底部装逼依旧在，我拿走了啊。。。。</p>--}}
-
-                    {{--<div class="reply"><a rel='nofollow' class='comment-reply-link' href='http://www.siryin.com/link?replytocom=931#respond' onclick='return addComment.moveForm( "div-comment-931", "931", "respond", "52" )' aria-label='回复给某宅'>回复</a></div>--}}
-                {{--</div>--}}
-                {{--<ul class="children">--}}
-                    {{--<li class="comment byuser comment-author-yxs bypostauthor odd alt depth-2 parent" id="comment-936">--}}
-                        {{--<div id="div-comment-936" class="comment-body">--}}
-                            {{--<div class="comment-author vcard">--}}
-                                {{--<img alt='' src='http://cn.gravatar.com/avatar/2106e2c3bad17698267dd8d101033491?s=32&#038;r=g' srcset='http://cn.gravatar.com/avatar/2106e2c3bad17698267dd8d101033491?s=64&amp;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' />			<cite class="fn">尹先生</cite><span class="says">说道：</span>		</div>--}}
-
-                            {{--<div class="comment-meta commentmetadata"><a href="http://www.siryin.com/link/comment-page-3#comment-936">--}}
-                                    {{--2016年10月8日 下午11:34</a>		</div>--}}
-
-                            {{--<p>@<a href="#comment-931">某宅</a>--}}
-                            {{--<p>卧槽，你换域名速度好快呀！</p>--}}
-
-                            {{--<div class="reply"><a rel='nofollow' class='comment-reply-link' href='http://www.siryin.com/link?replytocom=936#respond' onclick='return addComment.moveForm( "div-comment-936", "936", "respond", "52" )' aria-label='回复给尹先生'>回复</a></div>--}}
-                        {{--</div>--}}
-                        {{--<ul class="children">--}}
-                            {{--<li class="comment even depth-3 parent" id="comment-937">--}}
-                                {{--<div id="div-comment-937" class="comment-body">--}}
-                                    {{--<div class="comment-author vcard">--}}
-                                        {{--<img alt='' src='http://cn.gravatar.com/avatar/08b2775a4a23434e5d30ca08eb4c116c?s=32&#038;r=g' srcset='http://cn.gravatar.com/avatar/08b2775a4a23434e5d30ca08eb4c116c?s=64&amp;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' />			<cite class="fn"><a href='http://www.m1ku.cc/' rel='external nofollow' class='url'>某宅</a></cite><span class="says">说道：</span>		</div>--}}
-
-                                    {{--<div class="comment-meta commentmetadata"><a href="http://www.siryin.com/link/comment-page-3#comment-937">--}}
-                                            {{--2016年10月8日 下午11:40</a>		</div>--}}
-
-                                    {{--<p>@<a href="#comment-936">尹先生</a> 不换了！<br />--}}
-                                        {{--这么可爱的域名，我决定续10年了</p>--}}
-
-                                    {{--<div class="reply"><a rel='nofollow' class='comment-reply-link' href='http://www.siryin.com/link?replytocom=937#respond' onclick='return addComment.moveForm( "div-comment-937", "937", "respond", "52" )' aria-label='回复给某宅'>回复</a></div>--}}
-                                {{--</div>--}}
-                                {{--<ul class="children">--}}
-                                    {{--<li class="comment byuser comment-author-yxs bypostauthor odd alt depth-4" id="comment-938">--}}
-                                        {{--<div id="div-comment-938" class="comment-body">--}}
-                                            {{--<div class="comment-author vcard">--}}
-                                                {{--<img alt='' src='http://cn.gravatar.com/avatar/2106e2c3bad17698267dd8d101033491?s=32&#038;r=g' srcset='http://cn.gravatar.com/avatar/2106e2c3bad17698267dd8d101033491?s=64&amp;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' />			<cite class="fn">尹先生</cite><span class="says">说道：</span>		</div>--}}
-
-                                            {{--<div class="comment-meta commentmetadata"><a href="http://www.siryin.com/link/comment-page-3#comment-938">--}}
-                                                    {{--2016年10月8日 下午11:41</a>		</div>--}}
-
-                                            {{--<p>@<a href="#comment-937">某宅</a>--}}
-                                            {{--<p>好啊，希望你可以坚持下去</p>--}}
-
-                                            {{--<div class="reply"><a rel='nofollow' class='comment-reply-link' href='http://www.siryin.com/link?replytocom=938#respond' onclick='return addComment.moveForm( "div-comment-938", "938", "respond", "52" )' aria-label='回复给尹先生'>回复</a></div>--}}
-                                        {{--</div>--}}
-                                    {{--</li><!-- #comment-## -->--}}
-                                {{--</ul><!-- .children -->--}}
-                            {{--</li><!-- #comment-## -->--}}
-                        {{--</ul><!-- .children -->--}}
-                    {{--</li><!-- #comment-## -->--}}
-                {{--</ul><!-- .children -->--}}
-            {{--</li><!-- #comment-## -->--}}
         </ol>
 
         {{--<div class="navigation">--}}
             {{--<div class="alignleft"><a href="http://www.ubai.me/link/comment-page-2#comments" >&laquo; 先前评论</a></div>--}}
             {{--<div class="alignright"></div>--}}
         {{--</div>--}}
-        <!-- If comments are open, but there are no comments. -->
-
 
         <div id="respond" class="comment-respond">
             <h3 id="reply-title" class="comment-reply-title">发表评论

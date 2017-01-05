@@ -18,6 +18,13 @@ class Comment extends Model
         return self::create($input);
     }
 
+    public function findVipID($parent_id,$ArtID) {
+        $info = self::join('vips','comments.name','=','vips.id')
+            ->select('vips.user_name as comment_parent_user_name')
+            ->where('comment_post_id',$ArtID)
+            ->find($parent_id);
+        return $info->comment_parent_user_name;
+    }
     public function selectParentComment($ArtID) {
         return self::join('vips' , 'comments.name' , '=' , 'vips.id')
             ->select('comments.id as comment_id','vips.user_name as comment_user_name','vips.user_url as comment_user_url','vips.thumb as comment_user_thumb','comments.content as comment_content','comments.created_at')
@@ -25,6 +32,53 @@ class Comment extends Model
             ->where('comment_post_id',$ArtID)
 //            ->get()
             ->paginate(10);
+    }
+
+    public function selectChildComment($ArtID) {
+//        dd($this->findVipID(6,2));
+        $childComment = self::join('vips' , 'comments.name' , '=' , 'vips.id')
+            ->select('comments.id as comment_id','vips.user_name as comment_user_name','vips.user_url as comment_user_url','vips.thumb as comment_user_thumb','comments.content as comment_content','comments.comment_parent','comments.created_at')
+            ->orderBy('comments.id','desc')
+//            ->where('comment_parent',0)
+            ->where('comment_post_id',$ArtID)
+            ->get()
+            ->toArray();
+//        dd($childComment);
+        foreach ($childComment as $key => $value) {
+            if ($value['comment_parent']!=0) {
+                $childComment[$key]['parent_name'] = $this->findVipID($value['comment_parent'],$ArtID);
+            }
+        }
+//        dd($childComment);
+        return $this->orderChildComment($childComment);
+//        dd($this->orderChildComment($parent_id,$childComment));
+    }
+
+    public function orderChildComment($commentArr) {
+        $comArr = array();
+        foreach ($commentArr as $value) {
+
+            $comArr[$value['comment_id']] = $value;
+        }
+        foreach ($comArr as $value) {
+
+            foreach ($comArr as $val) {
+                if ($value['comment_id'] == $val['comment_parent']) {
+
+                    $comArr[$val['comment_parent']]['child'][] = $val;
+                }
+            }
+        }
+//        return $comArr;
+        $comment = array();
+        foreach ($comArr as $value) {
+            if ($value['comment_parent'] == 0) {
+                $comment[$value['comment_id']] = $value;
+            }
+        }
+        $comment = array_sort_recursive($comment);
+
+        return $comment;
     }
 
     public function ValidatorComment($CommentArr) {

@@ -81,12 +81,16 @@
                 'file_size'   =>  $image -> getClientSize(),
             );
 
-            $this->isQiniu = true;
+            $this->isQiniu = config('qiniu.isQiniu');
             if ($this->isQiniu) {
                 $info = $this -> qiniu();
                 if ($info['status']==0) {
-//                    $this->savePath = $info['msg'];
+                    $this->savePath = '//'.$info['msg'];
                     $fileArr['qiniu_url'] = $info['msg'];
+                }else{
+                    $imageApi -> Status = 1;
+                    $imageApi -> Error = $info['msg'];
+                    return $imageApi -> AjaxReturnError();
                 }
             }
 
@@ -100,14 +104,14 @@
             }
 
 
-            $this->isQiniu = true;
-            if ($this->isQiniu) {
-//                $info = $this -> qiniu();
-                if ($info['status']==0) {
-                    $this->savePath = '//'.$info['msg'];
-//                    $fileArr['qiniu_url'] = $info['msg'];
-                }
-            }
+//            $this->isQiniu = config('qiniu.isQiniu' , false);
+//            if ($this->isQiniu) {
+////                $info = $this -> qiniu();
+//                if ($info['status']==0) {
+//                    $this->savePath = '//'.$info['msg'];
+////                    $fileArr['qiniu_url'] = $info['msg'];
+//                }
+//            }
             $imageApi -> Status = 0;
             $imageApi -> ImageUrl = $this -> savePath;
 

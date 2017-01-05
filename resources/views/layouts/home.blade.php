@@ -18,12 +18,12 @@
     <![endif]-->
     <style>
         @font-face {
-            font-family: 'iconfont';
-            src: url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.eot');
-            src: url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.eot?#iefix') format('embedded-opentype'),
-            url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.woff') format('woff'),
-            url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.ttf') format('truetype'),
-            url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.svg#iconfont') format('svg');
+            font-family: 'iconfont';  /* project id 118726 */
+            src: url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.eot');
+            src: url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.woff') format('woff'),
+            url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.svg#iconfont') format('svg');
         }
         .iconfont{
             font-family:"iconfont" !important;

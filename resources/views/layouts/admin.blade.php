@@ -27,12 +27,12 @@
 
     <style>
         @font-face {
-            font-family: 'iconfont';  /* project id："118726" */
-            src: url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.eot');
-            src: url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.eot?#iefix') format('embedded-opentype'),
-            url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.woff') format('woff'),
-            url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.ttf') format('truetype'),
-            url('//at.alicdn.com/t/font_gy7r75a4di7tx1or.svg#iconfont') format('svg');
+            font-family: 'iconfont';  /* project id 118726 */
+            src: url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.eot');
+            src: url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.woff') format('woff'),
+            url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_ly60vpyimt6xyldi.svg#iconfont') format('svg');
         }
 
         .iconfont{
@@ -112,10 +112,18 @@
                     </div>
                 </li>
                 <li>
-                    <a href="/admin/file">
+                    <a data-toggle="collapse" href="#Static">
                         <i class="iconfont">&#xe628;</i>
-                        <p>资源</p>
+                        <p>资源
+                            <b class="caret"></b>
+                        </p>
                     </a>
+                    <div class="collapse" id="Static">
+                        <ul class="nav">
+                            <li><a href="/admin/fileSetting">配置</a></li>
+                            <li><a href="/admin/file">资源管理</a></li>
+                        </ul>
+                    </div>
                 </li>
                 <li>
                     <a href="/admin/msg">
