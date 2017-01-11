@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>{{ config('site.web_name','余白') }}</title>
+    <title>@yield('title')</title>
     <meta name="description"  content="" />
     <meta name="keywords"  content="" />
     <script type='text/javascript' src='https://cdn.staticfile.org/jquery/1.12.3/jquery.min.js'></script>
     <script type='text/javascript' src='https://cdn.staticfile.org/jquery-migrate/1.4.0/jquery-migrate.min.js' defer='defer'></script>
     <link type="image/vnd.microsoft.icon" href="/favicon.ico" rel="shortcut icon">
-    <link href="{{ asset('css/all.min.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ elixir('css/all.min.css') }}" type="text/css" rel="stylesheet" />
     <link href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
@@ -102,7 +102,7 @@
                     @endif
                 @endforeach
                 @endif
-                <li><a target="_blank" href="{{ asset('sitemap.xml') }}">地图</a></li>
+                {{--<li><a target="_blank" href="{{ asset('sitemap.xml') }}">地图</a></li>--}}
                 <br />
                 <li>我想背上行囊，去远方的他乡。去寻找你的过往，去实现我的梦想。</li>
             </ul>

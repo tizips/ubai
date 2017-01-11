@@ -14,9 +14,10 @@
 Route::get('/', 'Home\IndexController@index');
 Route::get('link' ,'Home\LinkController@index');
 Route::get('Art/{ArtID}' ,'Home\ArticleController@index');
-Route::get('Cat/{CatID}', 'Home\CategoryController@index');
+Route::get('Cat/{CatName}', 'Home\CategoryController@index');
 Route::get('msg', 'Home\MsgController@index');
 Route::post('toAjaxComment' , 'Home\CommentController@toAddComment');
+Route::get('toSearch','Home\SearchController@toSearch');
 
 Auth::routes();
 
@@ -96,8 +97,9 @@ Route::get('test' , function () {
 //    }
 });
 Route::get('demo',function (){
+    return 'demo';
 //    dd(\Illuminate\Support\Facades\Cache::store('file')->forget('category_11_1'));
 //    return 'https://gravatar.css.network/avatar/'.md5('tizips@qq.com').'.jpg?s=32';
 //    return mb_strlen('https://gravatar.css.network/avatar/4f64c9f81bb0d4ee969aaf7b4a5a6f40.jpg?s=32');
-    return \App\Tool\CommentDealt::test();
+//    return \App\Tool\CommentDealt::test();
 });

@@ -10,7 +10,7 @@ use Request;
 
 class CategoryController extends Controller
 {
-    public function index($CatID) {
+    public function index($CatName) {
 
 //        $num = Request::input('page' , 1);
 //        dd(Cache::store('file')->get('category_10_1'));

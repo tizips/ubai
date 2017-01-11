@@ -160,6 +160,9 @@ class Category extends Model
         });
         $validator -> validate();
     }
+    public function existsCatName($CatName) {
+
+    }
 
     /**验证 Id ， 判断栏目是否存在
      * @return mixed 返回验证结果

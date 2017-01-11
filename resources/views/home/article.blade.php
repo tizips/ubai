@@ -1,5 +1,8 @@
 @extends('layouts.home')
 
+@section('title')
+    {{ $art->title }} -{{ config('site.web_name','余白') }}
+@endsection
 @section('Content')
 <div id="pjax">
     <main id="main">

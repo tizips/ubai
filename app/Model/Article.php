@@ -152,6 +152,7 @@ class Article extends Model
             ->join('categories' , 'articles.cat_id' , '=' , 'categories.id')
             ->join('articles_status' , 'articles.article_status' , '=' , 'articles_status.id')
             ->select('articles.id' , 'articles.title' ,'categories.cat_name' , 'articles.article_status' ,'articles_status.article_status_name' , 'users.name as author' , 'articles.updated_at')
+            ->orderby('id','desc')
             ->paginate(10);
     }
 

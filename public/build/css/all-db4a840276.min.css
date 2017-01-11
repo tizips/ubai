@@ -42,7 +42,7 @@ img {border:0;max-width:100%;}
 #header ul li{float:left;position:relative}
 #header ul li a{padding:5px 20px;display:inline-block;color:#545454}
 #header .show-nav{display:none}
-#header ul li a:hover{color:#A0DAD0}
+#header ul li a:hover{color:#f55;cursor:pointer;}
 #header .lower:hover .menu,#header .lower:hover #header .show-nav{opacity:1}
 .lower li ul{display:none;opacity:1;position:absolute;background:#FFF;top:46px;left:-15px;width:100px;text-align:left;border-radius:5px;border:1px solid #E8E8E8;z-index:9999;-webkit-animation:fadeInUp .2s .1s ease both;-moz-animation:fadeInUp .2s .1s ease both}
 @-webkit-keyframes fadeInUp{0%{opacity:0;-webkit-transform:translateY(10px)}

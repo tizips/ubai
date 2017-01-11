@@ -1,5 +1,7 @@
 @extends('layouts.home')
-
+@section('title')
+    {{ config('site.web_name','余白') }}
+@endsection
 @section('Content')
 <div id="pjax">
     <section id="slide">
@@ -33,7 +35,7 @@
         @endforeach
 
         <nav class="navigator">
-            {!! $page or '' !!}
+            {{ $art->links('pagination.home') }}
             {{--<a href="#" ><i class="iconfont">&#xe79e;</i></a>--}}
             {{--<a href="#" ><i class="iconfont">&#xe6ba;</i></a>--}}
         </nav>
