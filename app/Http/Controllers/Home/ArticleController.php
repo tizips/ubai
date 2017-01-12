@@ -17,6 +17,8 @@ class ArticleController extends Controller
 //        dd();
         $comment = new Comment();
         $commentResult = $comment->selectChildComment($ArtId);
+//        dd($commentResult);
+        $commentNum = $comment->countChildComment($ArtId);
 //        dd($commentResult->);
 //        foreach ($commentResult as $key => $value) {
 //            echo $value->comment_id."<br />";
@@ -29,6 +31,7 @@ class ArticleController extends Controller
             ->with('menu' , Cache::get('topMenu'))
             ->with('art' , $article->findArtInfo($ArtId))
             ->with('link' , Cache::get('link'))
+            ->with('commentNum',$commentNum)
             ->with('comment',$commentResult);
     }
 }

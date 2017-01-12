@@ -14,7 +14,7 @@
 Route::get('/', 'Home\IndexController@index');
 Route::get('link' ,'Home\LinkController@index');
 Route::get('Art/{ArtID}' ,'Home\ArticleController@index');
-Route::get('Cat/{CatName}', 'Home\CategoryController@index');
+Route::get('{CatUrlName}', 'Home\CategoryController@index');
 Route::get('msg', 'Home\MsgController@index');
 Route::post('toAjaxComment' , 'Home\CommentController@toAddComment');
 Route::get('toSearch','Home\SearchController@toSearch');

@@ -47,19 +47,17 @@
                     <li><a href="{{ url('/') }}">首页</a></li>
                     @if(!empty($menu))
                     @foreach($menu as $val)
-                        <li><a @if(!isset($val['child'])) href="{{ $val['cat_url'] ? $val['cat_url'] : '/Cat/'.$val['id'] }}" @endif>{{ $val['cat_name'] }}</a>
+                        <li><a @if(!isset($val['child'])) href="{{ url($val['cat_url']) }}" @endif>{{ $val['cat_name'] }}</a>
                             @if(isset($val['child']))
                                 <ul class="sub-menu">
                                     @foreach($val['child'] as $child)
-                                        <li><a href="{{ $child['cat_url'] ? $child['cat_url'] : '/Cat/'.$child['id'] }}">{{ $child['cat_name'] }}</a></li>
+                                        <li><a href="{{ url($val['cat_url']) }}">{{ $child['cat_name'] }}</a></li>
                                     @endforeach
                                 </ul>
                             @endif
                         </li>
                     @endforeach
                     @endif
-                    <li><a href="/link">链接</a></li>
-                    <li><a href="/msg">留言</a></li>
                 </ul>
             </div>
             <i class="i_1"></i>
@@ -72,19 +70,17 @@
                         <li class="current-menu-item"><a href="{{ url('/') }}">首页</a></li>
                         @if(!empty($menu))
                         @foreach($menu as $val)
-                        <li><a @if(!isset($val['child'])) href="{{ $val['cat_url'] ? $val['cat_url'] : '/Cat/'.$val['id'] }}" @endif>{{ $val['cat_name'] }}</a>
+                        <li><a @if(!isset($val['child'])) href="{{ url($val['cat_url']) }}" @endif>{{ $val['cat_name'] }}</a>
                             @if(isset($val['child']))
                             <ul class="sub-menu">
                                 @foreach($val['child'] as $child)
-                                <li><a href="{{ $child['cat_url'] ? $child['cat_url'] : '/Cat/'.$child['id'] }}">{{ $child['cat_name'] }}</a></li>
+                                <li><a href="{{ url($val['cat_url']) }}">{{ $child['cat_name'] }}</a></li>
                                 @endforeach
                             </ul>
                             @endif
                         </li>
                         @endforeach
                         @endif
-                        <li><a href="/link">链接</a></li>
-                        <li><a href="/msg">留言</a></li>
                     </ul>
                 </div>
                 <i class="iconfont show-nav">&#xe613;</i>

@@ -34,13 +34,17 @@ class Comment extends Model
             ->paginate(10);
     }
 
+    public function countChildComment($ArtID) {
+        return self::where('comment_post_id',$ArtID)->count();
+    }
+
     public function selectChildComment($ArtID) {
 //        dd($this->findVipID(6,2));
         $childComment = self::join('vips' , 'comments.name' , '=' , 'vips.id')
             ->select('comments.id as comment_id','vips.user_name as comment_user_name','vips.user_url as comment_user_url','vips.thumb as comment_user_thumb','comments.content as comment_content','comments.comment_parent','comments.created_at')
             ->orderBy('comments.id','desc')
 //            ->where('comment_parent',0)
-            ->where('comment_post_id',$ArtID)
+            ->where('comment_post_id','=',$ArtID)
             ->get()
             ->toArray();
 //        dd($childComment);

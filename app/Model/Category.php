@@ -148,11 +148,11 @@ class Category extends Model
 
         $validator = Validator::make(Request::except('_token') , [
             'cat_name'      =>  'bail|required|unique:categories,cat_name,'.$CatID,
-            'cat_url'       =>  'sometimes|url'
+//            'cat_url'       =>  'sometimes|url'
         ] , [
             'cat_name.required'     =>  '栏目名称不能为空',
             'cat_name.unique'       =>  '栏目已存在',
-            'cat_url.url'    =>  '链接格式不正确',
+//            'cat_url.url'    =>  '链接格式不正确',
             'cat_pid.exists'        =>  '父级栏目不存在'
         ]);
         $validator -> sometimes('cat_pid' , 'exists:categories,id' , function ($input) {
@@ -162,6 +162,15 @@ class Category extends Model
     }
     public function existsCatName($CatName) {
 
+    }
+
+    public function validatorCatUrlNameExists($CatUrlName) {
+        $cat = self::select('id','cat_name as title','cat_seo_title','cat_seo_keyword','cat_seo_description','cat_page','cat_page_content')
+            ->where('cat_url',$CatUrlName)
+            ->first();
+        if (!empty($cat)) {
+            return $cat;
+        }
     }
 
     /**验证 Id ， 判断栏目是否存在
@@ -223,7 +232,7 @@ class Category extends Model
         return $category;
     }
     // 将
-    public function orderCatPage($CatID , $CatArr) {
+//    public function orderCatPage($CatID , $CatArr) {
 //        $catInfo = array();
 //        foreach ($CatArr as $value) {
 //            $catInfo[$value['id']] = $value;
@@ -234,13 +243,13 @@ class Category extends Model
 //
 //            $catArr[$value['id']] = $value;
 //        }
-        static $arr = array();
-        foreach ($CatArr as $value) {
-            if ($value['id']==$CatID) {
-                $arr[] = $value['id'];
-                $this->orderCatPage($value['cat_pid'] , $catInfo);
-            }
-        }
-        return $arr;
-    }
+//        static $arr = array();
+//        foreach ($CatArr as $value) {
+//            if ($value['id']==$CatID) {
+//                $arr[] = $value['id'];
+//                $this->orderCatPage($value['cat_pid'] , $catInfo);
+//            }
+//        }
+//        return $arr;
+//    }
 }

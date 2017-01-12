@@ -258,7 +258,7 @@ img {border:0;max-width:100%;}
 #commentform input#submit:hover {background:#f55;border:2px solid #f55;color:#fff;}
 .butterBar {width:100%;line-height:80px;position:fixed;text-align:center;left:0;top:0;z-index:11;background:rgba(255,255,255,.8);box-shadow:0 1px 3px #eee;}
 .butterBar-message {font-size:14px;}
-.commentlist {counter-reset:comment-floor;padding:0 6%; display: none;}
+.commentlist {counter-reset:comment-floor;padding:0 6%;}
 .commentlist > .comment {position:relative;}
 .commentlist > .comment:before {content:'#'counter(comment-floor);counter-increment:comment-floor;font-size:16px;position:absolute;top:30px;right:0;color:#ccc;}
 /* 按钮 */

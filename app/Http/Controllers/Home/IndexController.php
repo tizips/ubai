@@ -17,9 +17,9 @@ class IndexController extends Controller
 //        dd(Cache::get('topMenu'));
 //		$num = Request::input('page' , 1);
 //		$article = Cache::tags(['index' , $num])->get('ArtList');
-		$article = $art->selectArt();
+		$article = $art->selectArticle();
 //		dd($article);
-		
+//		dd($article);
 		return view('home.index')
 //			->with('page' , Cache::tags(['index' , $num])->get('ArtLink'))
 			->with('menu' , Cache::get('topMenu'))

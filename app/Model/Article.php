@@ -104,7 +104,7 @@ class Article extends Model
      * @param $offset
      * @return mixed    返回查询的文章
      */
-    public function selectArticle($offset) {
+    public function selectArticle() {
 
         return self::join('users' , 'articles.author' , '=' , 'users.id')
             ->join('categories' , 'articles.cat_id' , '=' , 'categories.id')
@@ -112,9 +112,10 @@ class Article extends Model
             ->select('articles.id' , 'articles.title' ,'categories.cat_name' , 'articles.thumb' , 'articles.content' , 'articles.seo_title' , 'articles.seo_keyword' , 'articles.seo_description' , 'users.name as author' , 'articles.updated_at')
             ->where('article_status' , '=' , 0)
             ->orderBy('id','desc')
-            ->take(10)
-            ->skip($offset)
-            ->get();
+//            ->take(10)
+//            ->skip($offset)
+//            ->get();
+            ->paginate();
     }
 
     /**                 根据栏目 ID ，查询文章

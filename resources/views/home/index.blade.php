@@ -27,7 +27,7 @@
                 <span class="time">{{ $article -> updated_at->diffForHumans() }}</span>
                 <span class="comment">{{ $article -> cat_name }}</span>
                 <p itemprop="post">
-                    {{ $article -> summary }}
+                    {{ str_limit(strip_tags($article -> content),300) }}
                 </p>
             </div>
         </article>
