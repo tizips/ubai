@@ -47,11 +47,11 @@
                     <li><a href="{{ url('/') }}">首页</a></li>
                     @if(!empty($menu))
                     @foreach($menu as $val)
-                        <li><a @if(!isset($val['child'])) href="{{ url($val['cat_url']) }}" @endif>{{ $val['cat_name'] }}</a>
+                        <li><a @if(!isset($val['child'])) href="/{{ $val['cat_url'] }}" @endif>{{ $val['cat_name'] }}</a>
                             @if(isset($val['child']))
                                 <ul class="sub-menu">
                                     @foreach($val['child'] as $child)
-                                        <li><a href="{{ url($val['cat_url']) }}">{{ $child['cat_name'] }}</a></li>
+                                        <li><a href="/{{ $child['cat_url'] }}">{{ $child['cat_name'] }}</a></li>
                                     @endforeach
                                 </ul>
                             @endif
@@ -70,11 +70,11 @@
                         <li class="current-menu-item"><a href="{{ url('/') }}">首页</a></li>
                         @if(!empty($menu))
                         @foreach($menu as $val)
-                        <li><a @if(!isset($val['child'])) href="{{ url($val['cat_url']) }}" @endif>{{ $val['cat_name'] }}</a>
+                        <li><a @if(!isset($val['child'])) href="/{{ $val['cat_url'] }}" @endif>{{ $val['cat_name'] }}</a>
                             @if(isset($val['child']))
                             <ul class="sub-menu">
                                 @foreach($val['child'] as $child)
-                                <li><a href="{{ url($val['cat_url']) }}">{{ $child['cat_name'] }}</a></li>
+                                <li><a href="/{{ $child['cat_url'] }}">{{ $child['cat_name'] }}</a></li>
                                 @endforeach
                             </ul>
                             @endif

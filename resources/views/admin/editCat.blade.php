@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('Style')
-    <link rel="stylesheet" href="/Static/Editor/css/wangEditor.min.css">
+    <link rel="stylesheet" href="/components/editor/css/wangEditor.min.css">
     <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/css/fileinput.min.css" rel="stylesheet">
 @endsection
 @section('content')
@@ -135,7 +135,7 @@
 
 @endsection
 @section('JavaScript')
-    <script src="/Static/Editor/js/wangEditor.min.js"></script>
+    <script src="/components/editor/js/wangEditor.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/fileinput.min.js"></script>
     {{--<script src="/Static/Fileinput/js/locales/zh.js"></script>--}}
     <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/locales/zh.min.js"></script>

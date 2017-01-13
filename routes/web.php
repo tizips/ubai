@@ -14,7 +14,6 @@
 Route::get('/', 'Home\IndexController@index');
 Route::get('link' ,'Home\LinkController@index');
 Route::get('Art/{ArtID}' ,'Home\ArticleController@index');
-Route::get('{CatUrlName}', 'Home\CategoryController@index');
 Route::get('msg', 'Home\MsgController@index');
 Route::post('toAjaxComment' , 'Home\CommentController@toAddComment');
 Route::get('toSearch','Home\SearchController@toSearch');
@@ -103,3 +102,5 @@ Route::get('demo',function (){
 //    return mb_strlen('https://gravatar.css.network/avatar/4f64c9f81bb0d4ee969aaf7b4a5a6f40.jpg?s=32');
 //    return \App\Tool\CommentDealt::test();
 });
+
+Route::get('{CatUrlName}', 'Home\CategoryController@index');
