@@ -102,7 +102,7 @@ class Category extends Model
     public function simpleFind($CatID = 0) {
         $catInfo = self::join('categories_status' , 'categories.cat_status' , '=' , 'categories_status.id')
             ->select('categories.id as id','cat_name','cat_order','cat_pid','cat_url','cat_status' ,'cat_page' , 'categories_status.id as cat_status' , 'cat_status_name')
-            ->orderBy('cat_order' , 'desc')
+            ->orderBy('cat_order' , 'asc')
             ->orderBy('id','asc')
             ->get()
             ->toArray();
@@ -115,7 +115,7 @@ class Category extends Model
         $catInfo = self::select('id','cat_name','cat_pid','cat_seo_title','cat_seo_keyword','cat_seo_description','cat_url')
             ->where('cat_status' , '=' , 0)
             ->orderBy('cat_order' , 'asc')
-            ->orderBy('id','desc')
+            ->orderBy('id','asc')
             ->get()
             ->toArray();
 //        dd($catInfo);
@@ -227,7 +227,7 @@ class Category extends Model
                 $category[$value['id']] = $value;
             }
         }
-        $category = array_sort_recursive($category);
+//        $category = array_sort_recursive($category);
         
         return $category;
     }
