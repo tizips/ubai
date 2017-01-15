@@ -13,6 +13,8 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::drop('users');
+
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->char('name' , 20)->unique()->comment('用户名');
@@ -34,6 +36,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+
     }
 }
