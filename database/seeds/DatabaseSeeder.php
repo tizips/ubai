@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
          $this->call(links_status::class);
          $this->call(messages_status::class);
          $this->call(systems::class);
+         $this->call(link_category::class);
     }
 }

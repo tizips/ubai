@@ -1,5 +1,5 @@
 <h3 id="comments">
-    {{ $commentNum ? $commentNum : 0 }}条回应：&#8220;{{ $art->author.' - '.$art->title }}&#8221;	</h3>
+    {{ $commentNum ? $commentNum : 0 }}条回应：&#8220;{{ isset($art) ? $art->author.' - '.$art->title : $cat->title }}&#8221;	</h3>
 
 <div class="navigation">
     {{--<div class="alignTop">--}}
@@ -47,7 +47,7 @@
 <div id="respond" class="comment-respond">
     <h3 id="reply-title" class="comment-reply-title">发表评论
         <small>
-            <a rel="nofollow" id="cancel-comment-reply-link" href="{{ url('Art/'.$art->id) }}#respond" style="display:none;">取消回复</a>
+            <a rel="nofollow" id="cancel-comment-reply-link" href="{{ isset($art) ? url('Art/'.$art->id) : url()->previous() }}#respond" style="display:none;">取消回复</a>
         </small>
     </h3>
     <form action="{{ url('toComment') }}" method="post" id="commentform" class="comment-form">
@@ -74,7 +74,8 @@
         </p>
         <p class="form-submit">
             <input name="submit" type="submit" id="submit" class="submit" value="发表评论" />
-            <input type='hidden' name='comment_post_id' value='{{ $art->id }}' id='comment_post_ID' />
+            <input type='hidden' name='comment_post_id' value='{{ $art->id or 0 }}' id='comment_post_ID' />
+            <input type="hidden" name="comment_cat_id" value="{{ $cat->id or 0 }}">
             <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
         </p>
     </form>

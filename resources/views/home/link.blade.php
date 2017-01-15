@@ -35,6 +35,9 @@
 
             <!-- You can start editing here. -->
 
+            @if($cat->cat_comment)
+                @include('home.comment')
+            @endif
             {{--<h3 id="comments">--}}
                 {{--60条回应：&#8220;友情链接&#8221;	</h3>--}}
 

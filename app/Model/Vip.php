@@ -15,11 +15,15 @@ class Vip extends Model
         return self::create($input);
     }
     public function findVip($VipID) {
-        return self::select('user_name')
+        $info = self::select('user_name')
             ->find($VipID);
+        return $info->user_name;
     }
     public function ValidatorVipExists($vip) {
         return self::where('user_name','=',$vip)->first();
+    }
+    public function ValidatorReplyVipExists($VipID) {
+        return self::select('user_name')->find($VipID);
     }
     public function ValidatorVip($vip) {
         $validator = Validator::make($vip , [

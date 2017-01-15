@@ -116,6 +116,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
+                                                        <label class="col-md-2 control-label">是否开启留言</label>
+                                                        <div class="col-md-10">
+                                                            <label class="checkbox">
+                                                                <input name="cat_comment" type="checkbox" data-toggle="checkbox" value="1" @if(old('cat_comment')) {{ empty(old('cat_comment')) ? '' : 'checked' }}  @else {{ empty($cat->cat_comment) ? '' : 'checked' }} @endif>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label class="col-md-2 control-label">单页内容</label>
                                                         <div class="col-md-10">
                                                             <textarea name="cat_page_content" id="catEditor" style="display:none; height: 400px;">{{ old('cat_page_content') ? old('cat_page_content') :  $cat->cat_page_content }}</textarea>

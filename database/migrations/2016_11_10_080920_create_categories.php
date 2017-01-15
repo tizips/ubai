@@ -28,6 +28,7 @@ class CreateCategories extends Migration
             $table->string('cat_url' , 120)->default('')->comment('栏目链接');
             $table->tinyInteger('cat_status')->default(0)->comment('栏目状态');
             $table->tinyInteger('cat_page')->default(0)->comment('是否单页');
+            $table->tinyInteger('cat_comment')->default(0)->comment('是否单页留言');
             $table->string('cat_page_content' , 5000)->default('')->index()->comment('单页内容');
             $table->timestamps();
         });

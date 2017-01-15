@@ -350,7 +350,7 @@ img {border:0;max-width:100%;}
 #respond h3 {float:left;/* margin:10px 0;*/        color:#000;font-size:18px;display:block;width:100%;}
 #respond h3 small {float:right;font-size:13px;line-height:13px;margin:6px 0 0 0;padding:5px;}
 #commentform {clear:both;line-height:1em;font-size:13px;padding:0 0 3% 0;}
-#commentform p.comment-notes {display:none;}
+/*#commentform p.comment-notes {display:none;}*/
 #commentform a {line-height:2.6em;}
 #commentform label {display:block;position:relative;right:0;margin:10px 0 -4px 0;}
 #commentform label span.required { color: #f55;}

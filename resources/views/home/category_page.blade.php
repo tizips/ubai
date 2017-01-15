@@ -21,7 +21,9 @@
         </article>
 
         <!-- You can start editing here. -->
-
+        @if($cat->cat_comment)
+        @include('home.comment')
+        @endif
         {{--<h3 id="comments">--}}
             {{--167条回应：&#8220;留言&#8221;	</h3>--}}
 

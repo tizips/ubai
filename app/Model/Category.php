@@ -21,6 +21,7 @@ class Category extends Model
         $catInfo['cat_order'] = Request::has('cat_order') ? Request::get('cat_order') : 50;
         $catInfo['cat_status'] = Request::has('cat_status') ? 1 : 0;
         $catInfo['cat_page'] = Request::has('cat_page') ? 1 : 0;
+        $catInfo['cat_comment'] = Request::has('cat_comment') ? 1 : 0;
 
         return self::create($catInfo);
     }
@@ -30,12 +31,13 @@ class Category extends Model
      */
     public function editCat() {
 
-        $catInfo = Request::only('id','cat_pid','cat_name','cat_pic','cat_url','cat_order','cat_status','cat_seo_title','cat_seo_keyword','cat_seo_description','cat_page','cat_page_content');
-        $catInfo['cat_order'] = $catInfo['cat_order'] ? $catInfo['cat_order'] : 50;
-        $catInfo['cat_status'] = $catInfo['cat_status'] ? $catInfo['cat_status'] : 0;
-        $catInfo['cat_page'] = $catInfo['cat_page'] ? $catInfo['cat_page'] : 0;
+        $catInfo = Request::only('id','cat_pid','cat_name','cat_pic','cat_url','cat_status','cat_seo_title','cat_seo_keyword','cat_seo_description','cat_page_content');
+        $catInfo['cat_order'] = Request::has('cat_order') ? Request::get('cat_order') : 50;
+        $catInfo['cat_status'] = Request::has('cat_status') ? 1 : 0;
+        $catInfo['cat_page'] = Request::has('cat_page') ? 1 : 0;
+        $catInfo['cat_comment'] = Request::has('cat_comment') ? 1 : 0;
 
-        $category = self::select('cat_name' , 'cat_order' , 'cat_pid' , 'cat_seo_title' , 'cat_seo_keyword' , 'cat_seo_description' , 'cat_url' , 'cat_status' , 'cat_page' , 'cat_page_content')
+        $category = self::select('cat_name' , 'cat_order' , 'cat_pid' , 'cat_seo_title' , 'cat_seo_keyword' , 'cat_seo_description' , 'cat_url' , 'cat_status' , 'cat_page' , 'cat_comment' , 'cat_page_content')
                     -> find($catInfo['id']);
         foreach ($catInfo as $key => $value) {
             $category -> $key = $value;
@@ -165,7 +167,7 @@ class Category extends Model
     }
 
     public function validatorCatUrlNameExists($CatUrlName) {
-        $cat = self::select('id','cat_name as title','cat_seo_title','cat_seo_keyword','cat_seo_description','cat_page','cat_page_content')
+        $cat = self::select('id','cat_name as title','cat_seo_title','cat_seo_keyword','cat_seo_description','cat_page','cat_comment','cat_page_content')
             ->where('cat_url',$CatUrlName)
             ->first();
         if (!empty($cat)) {

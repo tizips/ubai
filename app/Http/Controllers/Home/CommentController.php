@@ -25,7 +25,11 @@ class CommentController extends Controller
         $comment = new Comment();
         $parent_name = '';
         if (Request::get('comment_parent')!=0) {
-            $parent_name = $vip->findVip($comment->findVipID(Request::get('comment_parent')));
+            $parent_name = $comment->findVipID(Request::get('comment_parent'));
+            if (!$parent_name) {
+                response('回复对象不存在',403);
+            }
+//            $parent_name = $vip->findVip(Request::get('comment_parent'));
         }
         $commentResult = $comment->ValidatorComment(Request::all());
         if (!empty($commentResult)) {
@@ -79,7 +83,7 @@ class CommentController extends Controller
                                 </a>
                             </div>
 
-                            <p>@<a href="#comment-981">'.$parent_name->user_name.'</a>
+                            <p>@<a href="#comment-981">'.$parent_name.'</a>
                             <p>'.$addCommentResult->content.'</p>
 
                             <div class="reply">
