@@ -92,6 +92,8 @@
                     $imageApi -> Error = $info['msg'];
                     return $imageApi -> AjaxReturnError();
                 }
+            }else{
+                $fileArr['qiniu_url'] = '';
             }
 
             $uploadInfo = $upload -> addUpload($fileArr);

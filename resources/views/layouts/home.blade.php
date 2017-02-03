@@ -103,7 +103,7 @@
                 <li>我想背上行囊，去远方的他乡。去寻找你的过往，去实现我的梦想。</li>
             </ul>
         </section>
-        Theme by <a target="_blank" href="https://www.ubai.me">tizips</a>
+        Theme by <a target="_blank" href="https://ubai.me">tizips</a>
         &copy; 2016 <a href="{{ url('/') }}">{{ config('site.web_name','余白') }}</a>
         <a class="back2top"></a>
     </footer>
