@@ -24,6 +24,23 @@ class Comment extends Model
             ->find($parent_id);
         return $info->comment_parent_user_name;
     }
+
+    public function selectCommentPage() {
+        return self::join('vips' , 'comments.name' , '=' , 'vips.id')
+            ->join('articles', 'comments.comment_post_id', '=', 'articles.id')
+            ->select('articles.title as title','comments.id as comment_id','vips.user_name as comment_user_name','comments.created_at')
+            ->where('comment_post_id','!=',0)
+            ->paginate(10);
+    }
+
+    public function selectMessagePage() {
+        return self::join('vips' , 'comments.name' , '=' , 'vips.id')
+            ->join('categories', 'comments.comment_cat_id', '=', 'categories.id')
+            ->select('categories.cat_name as title','comments.id as comment_id','vips.user_name as comment_user_name','comments.created_at')
+            ->where('comment_cat_id','!=',0)
+            ->paginate(10);
+    }
+
     public function selectParentComment($ArtID) {
         return self::join('vips' , 'comments.name' , '=' , 'vips.id')
             ->select('comments.id as comment_id','vips.user_name as comment_user_name','vips.user_url as comment_user_url','vips.thumb as comment_user_thumb','comments.content as comment_content','comments.created_at')
