@@ -14,8 +14,6 @@ class CreateArticlesStatus extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('articles_status');
-
         Schema::create('articles_status', function (Blueprint $table) {
             $table->tinyInteger('id');
             $table->string('article_status_name');
@@ -29,6 +27,8 @@ class CreateArticlesStatus extends Migration
      */
     public function down()
     {
+
+        Schema::dropIfExists('articles_status');
 
     }
 }

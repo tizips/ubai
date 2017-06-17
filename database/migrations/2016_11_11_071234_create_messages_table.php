@@ -14,7 +14,6 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('messages');
 
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
@@ -34,5 +33,6 @@ class CreateMessagesTable extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('messages');
     }
 }

@@ -14,7 +14,6 @@ class CreateMessagesStatus extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('messages_status');
 
         Schema::create('messages_status', function (Blueprint $table) {
             $table->tinyInteger('id');
@@ -29,6 +28,6 @@ class CreateMessagesStatus extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('messages_status');
     }
 }

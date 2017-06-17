@@ -14,7 +14,6 @@ class CreateCategoriesStatus extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('categories_status');
 
         Schema::create('categories_status', function (Blueprint $table) {
             $table->tinyInteger('id');
@@ -30,5 +29,6 @@ class CreateCategoriesStatus extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('categories_status');
     }
 }

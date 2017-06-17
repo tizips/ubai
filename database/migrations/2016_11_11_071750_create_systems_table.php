@@ -14,7 +14,6 @@ class CreateSystemsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('systems');
 
         Schema::create('systems', function (Blueprint $table) {
             $table->smallIncrements('id');
@@ -32,5 +31,6 @@ class CreateSystemsTable extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('systems');
     }
 }

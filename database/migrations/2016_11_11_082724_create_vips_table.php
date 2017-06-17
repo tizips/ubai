@@ -14,7 +14,6 @@ class CreateVipsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('vips');
 
         Schema::create('vips', function (Blueprint $table) {
             $table->increments('id');
@@ -35,5 +34,6 @@ class CreateVipsTable extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('vips');
     }
 }

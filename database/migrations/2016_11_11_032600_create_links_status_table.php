@@ -14,7 +14,6 @@ class CreateLinksStatusTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('links_status');
 
         Schema::create('links_status', function (Blueprint $table) {
             $table->tinyInteger('id');
@@ -30,5 +29,6 @@ class CreateLinksStatusTable extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('links_status');
     }
 }

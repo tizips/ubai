@@ -14,8 +14,6 @@ class CreateUploadsTable extends Migration
     public function up()
     {
 
-        Schema::dropIfExists('uploads');
-
         Schema::create('uploads', function (Blueprint $table) {
             $table->increments('id');
             $table->string('file_name' , 60)->comment('文件名称');
@@ -38,5 +36,6 @@ class CreateUploadsTable extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('uploads');
     }
 }

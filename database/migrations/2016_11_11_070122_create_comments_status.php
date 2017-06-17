@@ -14,7 +14,6 @@ class CreateCommentsStatus extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('comments_status');
 
         Schema::create('comments_status', function (Blueprint $table) {
             $table->tinyInteger('id');
@@ -30,5 +29,6 @@ class CreateCommentsStatus extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('comments_status');
     }
 }

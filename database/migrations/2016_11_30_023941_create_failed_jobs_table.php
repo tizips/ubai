@@ -13,7 +13,6 @@ class CreateFailedJobsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('failed_jobs');
 
         Schema::create('failed_jobs', function (Blueprint $table) {
             $table->increments('id');
@@ -33,5 +32,6 @@ class CreateFailedJobsTable extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('failed_jobs');
     }
 }

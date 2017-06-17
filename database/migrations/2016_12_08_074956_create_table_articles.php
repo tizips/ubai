@@ -13,7 +13,6 @@ class CreateTableArticles extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('articles');
 
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
@@ -40,5 +39,6 @@ class CreateTableArticles extends Migration
     public function down()
     {
 
+        Schema::dropIfExists('articles');
     }
 }

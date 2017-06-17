@@ -14,7 +14,8 @@
         "algolia/algoliasearch-client-php": "^1.11",
         "intervention/image": "^2.3",
         "barryvdh/laravel-debugbar": "^2.3",
-        "qiniu/php-sdk": "^7.1"
+        "qiniu/php-sdk": "^7.1",
+        "scil/laravel-fly": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
